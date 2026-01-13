@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { authHooks } from "../../hooks/useAuth";
+import { GENDERS } from "../../constants/user";
 
 // ✅ Zod Schema - Backend validation এর সাথে match করে
 const registerSchema = z.object({
@@ -29,7 +30,7 @@ const registerSchema = z.object({
       "Username can only contain letters, numbers, and underscores"
     ),
 
-  gender: z.enum(["male", "female"], {
+  gender: z.enum([GENDERS.MALE, GENDERS.FEMALE] as const, {
     message: "Please select your gender",
   }),
 
@@ -71,7 +72,7 @@ const Register = () => {
   // ✅ Form submit handler - much cleaner now!
   const onSubmit = (data: RegisterFormData) => {
     // 📝 Real World Safety: Backend এও এখন agreeToTerms পাঠানো হচ্ছে
-    register({ userData: data });
+    register({ userData: data as any });
   };
 
   return (
@@ -186,8 +187,8 @@ const Register = () => {
                 }`}
               >
                 <option value="">Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value={GENDERS.MALE}>Male</option>
+                <option value={GENDERS.FEMALE}>Female</option>
               </select>
               {errors.gender && (
                 <p className="mt-1 text-sm text-red-500">

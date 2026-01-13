@@ -119,7 +119,7 @@ export interface RegisterData {
   fullName: string;
   phoneNumber: string;
   userName: string;
-  gender: "male" | "female";
+  gender: (typeof GENDERS)[keyof typeof GENDERS];
   password: string;
   agreeToTerms: boolean;
 }
