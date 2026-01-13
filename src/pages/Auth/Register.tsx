@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { authHooks } from "../../hooks/useAuth";
-import { USER_TYPES } from "../../constants";
 
 // ✅ Zod Schema - Backend validation এর সাথে match করে
 const registerSchema = z.object({
@@ -32,10 +31,6 @@ const registerSchema = z.object({
     .regex(/(?=.*[A-Z])/, "Password must contain at least one uppercase letter")
     .regex(/(?=.*\d)/, "Password must contain at least one number"),
 
-  userType: z.enum([USER_TYPES.STUDENT, USER_TYPES.TEACHER], {
-    message: "User Type is required",
-  }),
-
   // 📝 agreeToTerms: শুধু Frontend এর জন্য, Backend এ যাবে না
   agreeToTerms: z.literal(true, "You must agree to the terms"),
 });
@@ -59,7 +54,6 @@ const Register = () => {
       email: "",
       userName: "",
       password: "",
-      userType: undefined,
       agreeToTerms: undefined,
     },
   });
@@ -74,11 +68,11 @@ const Register = () => {
     <div className="flex h-screen items-center justify-center space-x-15 overflow-hidden">
       {/* Header - Left Side */}
       <div className="text-center">
-        <h1 className="mb-2 text-4xl font-bold text-gray-900">SocialHub</h1>
+        <h1 className="mb-2 text-4xl font-bold text-green-600">Talimuddin</h1>
         <h2 className="mb-2 text-2xl font-semibold text-gray-700">
           Create Account
         </h2>
-        <p className="text-gray-600">Join our community today</p>
+        <p className="text-gray-600">Join Islamic Academy today</p>
       </div>
 
       {/* Register Form - Right Side */}
@@ -164,34 +158,6 @@ const Register = () => {
               )}
             </div>
 
-            {/* User Type Field */}
-            <div>
-              <label
-                htmlFor="userType"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
-                I am a
-              </label>
-              <select
-                id="userType"
-                {...registerField("userType")}
-                className={`w-full appearance-none rounded-lg border px-3 py-2 transition-colors focus:ring-2 focus:outline-none ${
-                  errors.userType
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                }`}
-              >
-                <option value="">Select user type</option>
-                <option value={USER_TYPES.STUDENT}>Student</option>
-                <option value={USER_TYPES.TEACHER}>Teacher</option>
-              </select>
-              {errors.userType && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors.userType.message}
-                </p>
-              )}
-            </div>
-
             {/* Password Field */}
             <div>
               <label
@@ -239,7 +205,7 @@ const Register = () => {
                 id="agreeToTerms"
                 type="checkbox"
                 {...registerField("agreeToTerms")}
-                className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="mt-0.5 h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
               />
               <label
                 htmlFor="agreeToTerms"
@@ -248,14 +214,14 @@ const Register = () => {
                 I agree to the{" "}
                 <NavLink
                   to="/terms"
-                  className="text-blue-600 hover:text-blue-500"
+                  className="text-green-600 hover:text-green-500"
                 >
                   Terms of Service
                 </NavLink>{" "}
                 and{" "}
                 <NavLink
                   to="/privacy"
-                  className="text-blue-600 hover:text-blue-500"
+                  className="text-green-600 hover:text-green-500"
                 >
                   Privacy Policy
                 </NavLink>
@@ -272,7 +238,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-60"
+            className="w-full rounded-lg bg-green-600 px-4 py-2 font-semibold text-white hover:bg-green-700 disabled:opacity-60"
           >
             {isPending ? (
               <div className="flex items-center justify-center">
@@ -291,7 +257,7 @@ const Register = () => {
             Already have an account?{" "}
             <NavLink
               to="/login"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-green-600 hover:text-green-500"
             >
               Sign in here
             </NavLink>
@@ -303,5 +269,3 @@ const Register = () => {
 };
 
 export default Register;
-
-
