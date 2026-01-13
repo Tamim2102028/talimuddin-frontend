@@ -15,17 +15,6 @@ export type Gender = (typeof GENDERS)[keyof typeof GENDERS];
 export type Religion = (typeof RELIGIONS)[keyof typeof RELIGIONS];
 
 // ====================================
-// SOCIAL
-// ====================================
-
-export interface SocialLinks {
-  linkedin?: string;
-  github?: string;
-  website?: string;
-  facebook?: string;
-}
-
-// ====================================
 // ACTIVITY RESTRICTIONS
 // ====================================
 
@@ -62,13 +51,8 @@ export interface User {
   coverImage: string;
   bio?: string;
   gender?: Gender;
-  religion?: Religion;
+  religion?: string;
   dateOfBirth?: string;
-
-  // Social
-  socialLinks?: SocialLinks;
-  skills?: string[];
-  interests?: string[];
 
   // Stats (from backend model)
   postsCount: number;

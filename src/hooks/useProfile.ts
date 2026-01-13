@@ -38,15 +38,19 @@ const useProfileHeader = (username: string) =>
     ...defaultProfileQueryOptions,
   });
 
-const useProfileDetails = (username: string) =>
+const useProfileDetails = () => {
+  const { username } = useParams();
   useQuery({
     queryKey: ["profileDetails", username],
     queryFn: async () => {
-      const response = await profileService.getProfileDetails(username);
+      const response = await profileService.getProfileDetails(
+        username as string
+      );
       return response.data;
     },
     ...defaultProfileQueryOptions,
   });
+};
 
 // Update hooks
 const useUpdateGeneral = () => {

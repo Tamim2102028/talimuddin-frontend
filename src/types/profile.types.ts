@@ -1,4 +1,4 @@
-import type { Gender, SocialLinks, User } from "./user.types";
+import type { Gender, User } from "./user.types";
 
 export interface ProfileMeta {
   isOwnProfile: boolean;
@@ -24,7 +24,4 @@ export interface UpdateGeneralData {
   gender?: Gender;
   religion?: string;
   dateOfBirth?: string;
-  socialLinks?: SocialLinks;
-  skills?: string[];
-  interests?: string[];
 }
