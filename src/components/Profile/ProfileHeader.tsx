@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaEdit, FaEllipsisV, FaLink } from "react-icons/fa";
+import { FaEllipsisV, FaLink } from "react-icons/fa";
 import type { ProfileHeaderData } from "../../types";
 import { toast } from "sonner";
 
@@ -26,26 +26,6 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
     navigator.clipboard.writeText(profileUrl);
     toast.success("Profile link copied to clipboard!");
     setShowMenu(false);
-  };
-
-  // Render action buttons
-  const renderActionButtons = () => {
-    if (isOwnProfile) {
-      return (
-        <div className="flex gap-3">
-          {/* Edit button */}
-          <Link
-            to="/profile/edit"
-            className="flex items-center gap-2 rounded-md bg-green-600 px-6 py-2 text-white transition-colors hover:bg-green-700"
-          >
-            <FaEdit className="h-4 w-4" />
-            Edit Profile
-          </Link>
-        </div>
-      );
-    }
-
-    return null;
   };
 
   return (
@@ -119,17 +99,19 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
               @{userData.userName}
             </p>
 
-            {/* Bio */}
-            <p className="mt-3 max-w-prose text-base leading-relaxed font-medium text-gray-600">
-              {userData.bio ||
-                (isOwnProfile
-                  ? "Add a bio to tell people about yourself"
-                  : "No bio added yet")}
-            </p>
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-3">{renderActionButtons()}</div>
+          <div className="pt-3">
+            {isOwnProfile && (
+              <Link
+                to="/profile/edit"
+                className="flex w-30 items-center justify-center rounded-md bg-green-600 px-3 py-2 text-white transition-colors hover:bg-green-700"
+              >
+                Edit Profile
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>

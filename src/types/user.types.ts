@@ -49,7 +49,6 @@ export interface User {
   // Profile
   avatar: string;
   coverImage: string;
-  bio?: string;
   gender?: Gender;
   religion?: string;
   dateOfBirth?: string;

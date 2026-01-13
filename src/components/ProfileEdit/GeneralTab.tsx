@@ -7,7 +7,6 @@ import {
   FaPhone,
   FaVenusMars,
   FaPray,
-  FaInfoCircle,
   FaSpinner,
 } from "react-icons/fa";
 
@@ -24,7 +23,6 @@ const generalInfoSchema = z.object({
     .string()
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name cannot exceed 50 characters"),
-  bio: z.string().max(300, "Bio cannot exceed 300 characters").optional(),
   phoneNumber: z
     .string()
     .regex(/^(\+?\d{10,14})?$/, "Invalid phone number format")
@@ -61,7 +59,6 @@ const GeneralTab: React.FC<GeneralTabProps> = ({ user }) => {
     resolver: zodResolver(generalInfoSchema),
     defaultValues: {
       fullName: user.fullName || "",
-      bio: user.bio || "",
       phoneNumber: user.phoneNumber || "",
       gender: (user.gender as "MALE" | "FEMALE" | "") || "",
       religion: user.religion || "",
@@ -181,27 +178,6 @@ const GeneralTab: React.FC<GeneralTabProps> = ({ user }) => {
               )}
             />
           </div>
-        </div>
-
-        {/* Bio */}
-        <div className="mt-4">
-          <label className="mb-1 block text-sm font-medium text-gray-700">
-            <FaInfoCircle className="mr-1 inline text-gray-400" />
-            Bio
-          </label>
-          <textarea
-            {...register("bio")}
-            rows={3}
-            className={`w-full rounded-lg border px-3 py-2 focus:ring-2 focus:outline-none ${
-              errors.bio
-                ? "border-red-300 focus:ring-red-500"
-                : "border-gray-300 focus:ring-blue-500"
-            }`}
-            placeholder="Write a short bio about yourself..."
-          />
-          {errors.bio && (
-            <p className="mt-1 text-sm text-red-500">{errors.bio.message}</p>
-          )}
         </div>
       </div>
 
