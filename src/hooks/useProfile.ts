@@ -38,20 +38,6 @@ const useProfileHeader = (username: string) =>
     ...defaultProfileQueryOptions,
   });
 
-const useProfileDetails = () => {
-  const { username } = useParams();
-  useQuery({
-    queryKey: ["profileDetails", username],
-    queryFn: async () => {
-      const response = await profileService.getProfileDetails(
-        username as string
-      );
-      return response.data;
-    },
-    ...defaultProfileQueryOptions,
-  });
-};
-
 // Update hooks
 const useUpdateGeneral = () => {
   const queryClient = useQueryClient();
@@ -202,7 +188,6 @@ const useDeleteProfileComment = ({ postId }: { postId: string }) => {
 
 const profileHooks = {
   useProfileHeader,
-  useProfileDetails,
   useUpdateGeneral,
   useUpdateAvatar,
   useUpdateCoverImage,

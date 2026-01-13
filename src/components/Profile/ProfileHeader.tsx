@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaEdit, FaInfoCircle, FaEllipsisV, FaLink } from "react-icons/fa";
+import { FaEdit, FaEllipsisV, FaLink } from "react-icons/fa";
 import type { ProfileHeaderData } from "../../types";
 import { toast } from "sonner";
 
@@ -41,31 +41,11 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
             <FaEdit className="h-4 w-4" />
             Edit Profile
           </Link>
-          {/* Details button */}
-          <Link
-            to="/profile/details"
-            className="flex items-center gap-2 rounded-md bg-gray-600 px-6 py-2 text-white transition-colors hover:bg-gray-700"
-          >
-            <FaInfoCircle className="h-4 w-4" />
-            Details
-          </Link>
         </div>
       );
     }
 
-    // Other user's profile
-    return (
-      <div className="flex items-center gap-3">
-        {/* View Details button */}
-        <Link
-          to={`/profile/${userData.userName}/details`}
-          className="flex items-center gap-2 rounded-md bg-green-600 px-6 py-2 text-white transition-colors hover:bg-green-700"
-        >
-          <FaInfoCircle className="h-4 w-4" />
-          Details
-        </Link>
-      </div>
-    );
+    return null;
   };
 
   return (
@@ -135,7 +115,9 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
               {userData.fullName}
             </h1>
 
-            <p className="text-sm font-medium text-gray-600">@{userData.userName}</p>
+            <p className="text-sm font-medium text-gray-600">
+              @{userData.userName}
+            </p>
 
             {/* Bio */}
             <p className="mt-3 max-w-prose text-base leading-relaxed font-medium text-gray-600">
