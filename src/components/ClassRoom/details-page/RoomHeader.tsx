@@ -5,7 +5,6 @@ import {
   FaArchive,
   FaTrash,
   FaEyeSlash,
-  FaVideo,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -137,18 +136,8 @@ const RoomHeader: React.FC<RoomHeaderProps> = ({ room, meta }) => {
                     </p>
                   </div>
 
-                  {/* Go Live Button, Join Code, and 3-dot menu */}
+                  {/* Join Code, and 3-dot menu */}
                   <div className="flex items-center gap-2">
-                    {(meta.isCreator || meta.isAdmin) && (
-                      <Link
-                        to={`/classroom/rooms/${room._id}/live`}
-                        className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
-                      >
-                        <FaVideo className="h-4 w-4" />
-                        <span>Go Live</span>
-                      </Link>
-                    )}
-
                     {/* Join Code Display */}
                     {meta.joinCode && (
                       <button
