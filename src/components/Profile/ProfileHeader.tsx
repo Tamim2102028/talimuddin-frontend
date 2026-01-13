@@ -1,31 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { FaEllipsisV, FaLink } from "react-icons/fa";
 import type { ProfileHeaderData } from "../../types";
 import { toast } from "sonner";
 
 const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
   const { user: userData, meta } = data;
   const { isOwnProfile } = meta;
-  const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowMenu(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleCopyLink = () => {
     const profileUrl = window.location.href;
     navigator.clipboard.writeText(profileUrl);
     toast.success("Profile link copied to clipboard!");
-    setShowMenu(false);
   };
 
   return (
@@ -37,30 +22,6 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
           alt="Cover"
           className="h-full w-full object-cover"
         />
-
-        {/* 3-Dot Menu - positioned over cover */}
-        <div className="absolute top-4 right-4" ref={menuRef}>
-          <button
-            onClick={() => setShowMenu(!showMenu)}
-            className="rounded-full bg-white/90 p-2 text-gray-700 shadow-md backdrop-blur-sm transition-all hover:bg-white focus:outline-none"
-          >
-            <FaEllipsisV className="h-5 w-5" />
-          </button>
-
-          {showMenu && (
-            <div className="absolute top-full right-0 z-50 mt-1 w-56 rounded-lg border border-gray-200 bg-white shadow-lg">
-              <div className="py-1">
-                <button
-                  onClick={handleCopyLink}
-                  className="flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50"
-                >
-                  <FaLink className="h-4 w-4 flex-shrink-0 text-gray-400" />
-                  <span className="font-medium">Copy profile link</span>
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
 
         {/* Profile Stats - positioned on right side of cover */}
         <div className="absolute right-3 bottom-3 hidden md:block">
@@ -98,19 +59,24 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
             <p className="text-sm font-medium text-gray-600">
               @{userData.userName}
             </p>
-
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-3">
+          <div className="flex items-center gap-3 pt-4">
             {isOwnProfile && (
               <Link
                 to="/profile/edit"
-                className="flex w-30 items-center justify-center rounded-md bg-green-600 px-3 py-2 text-white transition-colors hover:bg-green-700"
+                className="flex items-center justify-center rounded-lg bg-green-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:outline-none"
               >
                 Edit Profile
               </Link>
             )}
+            <button
+              onClick={handleCopyLink}
+              className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:outline-none"
+            >
+              <span>Copy Profile Link</span>
+            </button>
           </div>
         </div>
       </div>
