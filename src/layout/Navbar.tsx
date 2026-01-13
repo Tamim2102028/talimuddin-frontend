@@ -1,55 +1,29 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import {
-  FaUniversity,
-  FaEnvelope,
-  FaHome,
-  FaBullhorn,
-  FaGraduationCap,
-  FaChalkboardTeacher,
-} from "react-icons/fa";
+import { FaEnvelope, FaHome } from "react-icons/fa";
 import { authHooks } from "../hooks/useAuth";
-import { USER_TYPES } from "../constants";
 
 const Navbar: React.FC = () => {
-  const { user, isAuthenticated } = authHooks.useUser();
+  const { isAuthenticated } = authHooks.useUser();
 
   if (!isAuthenticated) {
     return null; // Don't show navbar if not authenticated
   }
 
-  const isTeacher = user?.userType === USER_TYPES.TEACHER;
-
   const navItems = [
     { to: "/", icon: FaHome, label: "Home" },
-    { to: "/university", icon: FaUniversity, label: "University" },
-    { to: "/department", icon: FaGraduationCap, label: "Department" },
-    // CR Corner - hidden for teachers
-    ...(!isTeacher
-      ? [{ to: "/cr-corner", icon: FaBullhorn, label: "CR Corner" }]
-      : []),
-    // Teachers Corner - visible only for teachers
-    ...(isTeacher
-      ? [
-          {
-            to: "/teachers-corner",
-            icon: FaChalkboardTeacher,
-            label: "Teachers Corner",
-          },
-        ]
-      : []),
     { to: "/messages", icon: FaEnvelope, label: "Messages", badge: 2 },
   ];
 
   return (
     <nav className="sticky top-0 z-50 flex h-12 w-full items-center justify-evenly border-b border-gray-200 bg-white shadow-sm">
-      {/* 4 buttons with map */}
+      {/* Navigation items */}
       {navItems.map(({ to, icon: Icon, label, badge }) => (
         <div key={to} className="group relative">
           <NavLink
             to={to}
             className={({ isActive }) =>
-              `flex items-center space-x-2 rounded-lg p-2 transition-colors ${isActive ? "text-blue-600" : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"}`
+              `flex items-center space-x-2 rounded-lg p-2 transition-colors ${isActive ? "text-green-600" : "text-gray-600 hover:bg-gray-100 hover:text-green-600"}`
             }
           >
             <Icon className="h-5 w-5" />
@@ -67,5 +41,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
-

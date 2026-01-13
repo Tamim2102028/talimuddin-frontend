@@ -1,14 +1,6 @@
-import { PROFILE_RELATION_STATUS } from "../constants";
 import type { Gender, SocialLinks, User } from "./user.types";
 
-export type FriendshipStatus =
-  (typeof PROFILE_RELATION_STATUS)[keyof typeof PROFILE_RELATION_STATUS];
-
 export interface ProfileMeta {
-  profile_relation_status: FriendshipStatus;
-  isFollowing: boolean;
-  isBlockedByMe: boolean;
-  isBlockedByTarget: boolean;
   isOwnProfile: boolean;
 }
 
@@ -31,41 +23,8 @@ export interface UpdateGeneralData {
   phoneNumber?: string;
   gender?: Gender;
   religion?: string;
+  dateOfBirth?: string;
   socialLinks?: SocialLinks;
   skills?: string[];
   interests?: string[];
 }
-
-/**
- * PATCH /users/update-academic request body
- * Student fields
- */
-export interface UpdateStudentAcademicData {
-  institution?: string; // ObjectId - only for non-verified users
-  department?: string; // ObjectId - only for non-verified users
-  session?: string;
-  currentSemester?: number;
-  section?: string;
-  studentId?: string;
-}
-
-/**
- * PATCH /users/update-academic request body
- * Teacher fields
- */
-export interface UpdateTeacherAcademicData {
-  institution?: string; // ObjectId - only for non-verified users
-  department?: string; // ObjectId - only for non-verified users
-  teacherId?: string;
-  rank?: string;
-  officeHours?: {
-    day: string;
-    timeRange: string;
-    room: string;
-  }[];
-}
-
-// Combined academic update type
-export type UpdateAcademicData =
-  | UpdateStudentAcademicData
-  | UpdateTeacherAcademicData;

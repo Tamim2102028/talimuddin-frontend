@@ -4,21 +4,13 @@ import {
   FaUser,
   FaCog,
   FaBell,
-  FaVideo,
-  FaLayerGroup,
-  FaFolder,
-  FaStore,
-  FaChalkboardTeacher,
   FaSchool,
   FaEllipsisH,
-  FaBriefcase,
   FaSignOutAlt,
-  FaBookOpen,
-  FaUserFriends,
   FaSearch,
-  FaTrophy,
+  FaBookmark,
+  FaEnvelope,
 } from "react-icons/fa";
-import { BsStars } from "react-icons/bs";
 import { prefetchRoute } from "../routes/prefetch";
 import { authHooks } from "../hooks/useAuth";
 
@@ -38,34 +30,10 @@ const Sidebar: React.FC = () => {
       active: location.pathname.startsWith("/search"),
     },
     {
-      icon: FaTrophy,
-      label: "Competition",
-      path: "/gaming",
-      active: location.pathname === "/gaming",
-    },
-    {
       icon: FaSchool,
       label: "ClassRoom",
       path: "/classroom",
       active: location.pathname.startsWith("/classroom"),
-    },
-    {
-      icon: FaLayerGroup,
-      label: "Groups",
-      path: "/groups",
-      active: location.pathname.startsWith("/groups"),
-    },
-    {
-      icon: FaFolder,
-      label: "Files & Archive",
-      path: "/files",
-      active: location.pathname.startsWith("/files"),
-    },
-    {
-      icon: FaUserFriends,
-      label: "Friends",
-      path: "/friends",
-      active: location.pathname.startsWith("/friends"),
     },
     {
       icon: FaBell,
@@ -75,40 +43,16 @@ const Sidebar: React.FC = () => {
       badge: 5,
     },
     {
-      icon: BsStars,
-      label: "Study Helper AI",
-      path: "/study-helper",
-      active: location.pathname.startsWith("/study-helper"),
+      icon: FaEnvelope,
+      label: "Messages",
+      path: "/messages",
+      active: location.pathname.startsWith("/messages"),
     },
     {
-      icon: FaBookOpen,
-      label: "Open Study",
-      path: "/open-study",
-      active: location.pathname.startsWith("/open-study"),
-    },
-    {
-      icon: FaBriefcase,
-      label: "Career Hub",
-      path: "/career-hub",
-      active: location.pathname.startsWith("/career-hub"),
-    },
-    {
-      icon: FaStore,
-      label: "Student Store",
-      path: "/store",
-      active: location.pathname.startsWith("/store"),
-    },
-    {
-      icon: FaChalkboardTeacher,
-      label: "Tuition",
-      path: "/tuition",
-      active: location.pathname.startsWith("/tuition"),
-    },
-    {
-      icon: FaVideo,
-      label: "Videos",
-      path: "/videos",
-      active: location.pathname.startsWith("/videos"),
+      icon: FaBookmark,
+      label: "Saved",
+      path: "/saved",
+      active: location.pathname.startsWith("/saved"),
     },
     {
       icon: FaEllipsisH,
@@ -131,12 +75,14 @@ const Sidebar: React.FC = () => {
         to="/"
         className="flex items-center gap-3 border-b border-gray-300 px-2 pb-3"
       >
-        <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-purple-500 shadow-md">
-          <span className="text-2xl font-bold text-white">S</span>
+        <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-green-500 to-teal-500 shadow-md">
+          <span className="text-2xl font-bold text-white">T</span>
         </div>
         <div className="flex flex-col">
-          <span className="text-lg font-semibold text-gray-900">SocialHub</span>
-          <span className="text-sm text-gray-500">Connect & Learn</span>
+          <span className="text-lg font-semibold text-gray-900">
+            Talimuddin
+          </span>
+          <span className="text-sm text-gray-500">Islamic Academy</span>
         </div>
       </NavLink>
 
@@ -150,15 +96,15 @@ const Sidebar: React.FC = () => {
               onMouseEnter={() => prefetchRoute(item.path)}
               className={`flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-all duration-200 ${
                 item.active
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-gray-700 hover:bg-blue-100 hover:text-gray-900"
+                  ? "bg-green-50 text-green-600"
+                  : "text-gray-700 hover:bg-green-100 hover:text-gray-900"
               }`}
             >
               <div className="flex items-center">
                 <item.icon
                   className={`mr-3 h-5 w-5 transition-colors ${
                     item.active
-                      ? "text-blue-600"
+                      ? "text-green-600"
                       : "text-gray-500 group-hover:text-gray-900"
                   }`}
                 />
@@ -185,7 +131,7 @@ const Sidebar: React.FC = () => {
             className={({ isActive }) =>
               `group flex flex-1 items-center rounded-xl px-4 py-3 text-base font-medium transition-all duration-200 ${
                 isActive
-                  ? "bg-blue-50 text-blue-600"
+                  ? "bg-green-50 text-green-600"
                   : "text-gray-600 hover:bg-gray-100"
               }`
             }
@@ -209,5 +155,3 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
-
-
