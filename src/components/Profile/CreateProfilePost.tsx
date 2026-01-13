@@ -6,8 +6,6 @@ import {
   FaUserFriends,
   FaLock,
   FaBuilding,
-  FaPoll,
-  FaVideo,
 } from "react-icons/fa";
 import type { IconType } from "react-icons";
 import { useForm } from "react-hook-form";
@@ -40,7 +38,8 @@ type CreateProfilePostFormData = z.infer<typeof createProfilePostSchema>;
 
 const CreateProfilePost: React.FC = () => {
   const { user: currentUser } = authHooks.useUser();
-  const { mutate: createProfilePost, isPending } = profileHooks.useCreateProfilePost();
+  const { mutate: createProfilePost, isPending } =
+    profileHooks.useCreateProfilePost();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const {
@@ -135,20 +134,6 @@ const CreateProfilePost: React.FC = () => {
       Icon: FaImage,
       color: "text-green-500",
       onClick: () => alert("Photo upload coming soon!"),
-      show: true,
-    },
-    {
-      label: "Video",
-      Icon: FaVideo,
-      color: "text-red-500",
-      onClick: () => alert("Video upload coming soon!"),
-      show: true,
-    },
-    {
-      label: "Poll",
-      Icon: FaPoll,
-      color: "text-orange-500",
-      onClick: () => alert("Poll creation coming soon!"),
       show: true,
     },
   ];
@@ -297,6 +282,3 @@ const CreateProfilePost: React.FC = () => {
 };
 
 export default CreateProfilePost;
-
-
-
