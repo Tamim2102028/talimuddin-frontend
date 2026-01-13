@@ -8,7 +8,7 @@ import { authHooks } from "../../hooks/useAuth";
 
 // ✅ Zod Schema for Login
 const loginSchema = z.object({
-  email: z.string().min(1, "Email or Username is required"),
+  phoneNumber: z.string().min(1, "Phone number or Username is required"),
   password: z.string().min(1, "Password is required"),
   rememberMe: z.boolean().optional(),
 });
@@ -31,22 +31,22 @@ const Login = () => {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      phoneNumber: "",
       password: "",
       rememberMe: false,
     },
   });
 
-  // ✅ Component mount এ localStorage থেকে remembered email load করা
+  // ✅ Component mount এ localStorage থেকে remembered phone number load করা
   useEffect(() => {
-    const rememberedEmail = localStorage.getItem("rememberedEmail");
-    if (rememberedEmail) {
+    const rememberedPhone = localStorage.getItem("rememberedPhone");
+    if (rememberedPhone) {
       reset({
-        email: rememberedEmail,
+        phoneNumber: rememberedPhone,
         password: "",
         rememberMe: true,
       });
-      // ✅ Email যদি আগে থেকেই থাকে, তাহলে সরাসরি Password field এ focus করব
+      // ✅ Phone number যদি আগে থেকেই থাকে, তাহলে সরাসরি Password field এ focus করব
       setTimeout(() => passwordRef.current?.focus(), 0);
     }
   }, [reset]);
@@ -55,19 +55,21 @@ const Login = () => {
   const onSubmit = (data: LoginFormData) => {
     // Remember Me: login করার আগেই handle করি
     if (data.rememberMe) {
-      localStorage.setItem("rememberedEmail", data.email);
+      localStorage.setItem("rememberedPhone", data.phoneNumber);
     } else {
-      localStorage.removeItem("rememberedEmail");
+      localStorage.removeItem("rememberedPhone");
     }
 
-    login({ credentials: { email: data.email, password: data.password } });
+    login({
+      credentials: { phoneNumber: data.phoneNumber, password: data.password },
+    });
   };
 
   return (
     <div className="flex h-screen items-center justify-center space-x-15 overflow-hidden">
       {/* Header - Left Side */}
       <div className="text-center">
-        <h1 className="mb-2 text-4xl font-bold text-gray-900">SocialHub</h1>
+        <h1 className="mb-2 text-4xl font-bold text-green-600">Talimuddin</h1>
         <h2 className="mb-2 text-2xl font-semibold text-gray-700">
           Welcome Back
         </h2>
@@ -78,29 +80,29 @@ const Login = () => {
       <div className="w-[400px] rounded-lg border bg-white p-8 shadow-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
-            {/* Email Field */}
+            {/* Phone Number Field */}
             <div>
               <label
-                htmlFor="email"
+                htmlFor="phoneNumber"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email or Username
+                Phone Number or Username
               </label>
               <input
-                id="email"
+                id="phoneNumber"
                 type="text"
                 autoFocus // ✅ নতুন উইন্ডো লোড হলে বাই-ডিফল্ট এখানে ফোকাস থাকবে
-                {...register("email")}
+                {...register("phoneNumber")}
                 className={`mt-1 w-full rounded-lg border px-3 py-2 transition-colors focus:ring-2 focus:outline-none ${
-                  errors.email
+                  errors.phoneNumber
                     ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    : "border-gray-300 focus:border-green-500 focus:ring-green-500"
                 }`}
-                placeholder="Enter your email or username"
+                placeholder="Enter your phone number or username"
               />
-              {errors.email && (
+              {errors.phoneNumber && (
                 <p className="mt-1 text-sm text-red-500">
-                  {errors.email.message}
+                  {errors.phoneNumber.message}
                 </p>
               )}
             </div>
@@ -126,7 +128,7 @@ const Login = () => {
                   className={`w-full rounded-lg border px-3 py-2 pr-10 transition-colors focus:ring-2 focus:outline-none ${
                     errors.password
                       ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      : "border-gray-300 focus:border-green-500 focus:ring-green-500"
                   }`}
                   placeholder="Enter your password"
                 />
@@ -153,7 +155,7 @@ const Login = () => {
                 id="rememberMe"
                 type="checkbox"
                 {...register("rememberMe")}
-                className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
               />
               <label
                 htmlFor="rememberMe"
@@ -164,7 +166,7 @@ const Login = () => {
             </div>
             <NavLink
               to="/forgot-password"
-              className="text-sm font-medium text-blue-600 hover:text-blue-500"
+              className="text-sm font-medium text-green-600 hover:text-green-500"
             >
               Forgot password?
             </NavLink>
@@ -174,7 +176,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-60"
+            className="w-full rounded-lg bg-green-600 px-4 py-2 font-semibold text-white hover:bg-green-700 disabled:opacity-60"
           >
             {isPending ? (
               <div className="flex items-center justify-center">
@@ -193,7 +195,7 @@ const Login = () => {
             Don't have an account?{" "}
             <NavLink
               to="/register"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-green-600 hover:text-green-500"
             >
               Sign up here
             </NavLink>
@@ -205,5 +207,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
