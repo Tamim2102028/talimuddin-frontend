@@ -32,7 +32,7 @@ const RoomForm = () => {
       defaultValues: {
         name: "",
         description: "",
-        roomType: "GENERAL",
+        roomType: "MAIN_BRANCH",
         allowStudentPosting: true,
         allowComments: true,
       },
@@ -41,11 +41,8 @@ const RoomForm = () => {
   const { errors } = formState;
 
   const roomTypes = [
-    { value: "GENERAL", label: "General" },
-    { value: "UNIVERSITY", label: "University" },
-    { value: "COLLEGE", label: "College" },
-    { value: "COACHING", label: "Coaching Center" },
-    { value: "SCHOOL", label: "School" },
+    { value: "MAIN_BRANCH", label: "Main Branch" },
+    { value: "SUB_BRANCH", label: "Sub Branch" },
   ];
 
   const getRoomTypeLabel = (value: string) => {
