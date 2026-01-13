@@ -8,7 +8,12 @@ import { authHooks } from "../../hooks/useAuth";
 
 // ✅ Zod Schema for Login
 const loginSchema = z.object({
-  phoneNumber: z.string().min(1, "Phone number or Username is required"),
+  phoneNumber: z
+    .string()
+    .regex(
+      /^01[3-9]\d{8}$/,
+      "Please enter a valid phone number (e.g., 01712345678)"
+    ),
   password: z.string().min(1, "Password is required"),
   rememberMe: z.boolean().optional(),
 });
@@ -86,11 +91,11 @@ const Login = () => {
                 htmlFor="phoneNumber"
                 className="block text-sm font-medium text-gray-700"
               >
-                Phone Number or Username
+                Phone Number
               </label>
               <input
                 id="phoneNumber"
-                type="text"
+                type="tel"
                 autoFocus // ✅ নতুন উইন্ডো লোড হলে বাই-ডিফল্ট এখানে ফোকাস থাকবে
                 {...register("phoneNumber")}
                 className={`mt-1 w-full rounded-lg border px-3 py-2 transition-colors focus:ring-2 focus:outline-none ${
@@ -98,7 +103,7 @@ const Login = () => {
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:border-green-500 focus:ring-green-500"
                 }`}
-                placeholder="Enter your phone number or username"
+                placeholder="Enter your phone number"
               />
               {errors.phoneNumber && (
                 <p className="mt-1 text-sm text-red-500">
@@ -159,7 +164,7 @@ const Login = () => {
               />
               <label
                 htmlFor="rememberMe"
-                className="ml-2 block text-sm text-gray-700"
+                className="ml-2 block text-sm font-medium text-gray-700"
               >
                 Remember me
               </label>

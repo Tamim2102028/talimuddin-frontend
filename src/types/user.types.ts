@@ -110,8 +110,7 @@ export interface AuthResponse {
 
 // Login Types
 export interface LoginCredentials {
-  phoneNumber?: string;
-  userName?: string;
+  phoneNumber: string;
   password: string;
 }
 

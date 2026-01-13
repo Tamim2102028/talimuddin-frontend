@@ -128,7 +128,7 @@ const Register = () => {
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:border-green-500 focus:ring-green-500"
                 }`}
-                placeholder="Enter your phone number (e.g., 01712345678)"
+                placeholder="Enter your phone number"
               />
               {errors.phoneNumber && (
                 <p className="mt-1 text-sm text-red-500">
