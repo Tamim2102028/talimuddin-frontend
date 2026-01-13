@@ -76,16 +76,8 @@ export const routes: RouteConfig[] = [
     component: lazy(() => import("../pages/Notifications")),
     requireAuth: true,
     title: "Notifications",
-    category: "social",
-    meta: { description: "Your notifications and updates" },
-  },
-  {
-    path: "/messages",
-    component: lazy(() => import("../pages/Messages")),
-    requireAuth: true,
-    title: "Messages",
-    category: "social",
-    meta: { description: "Chat and messaging" },
+    category: "utility",
+    meta: { description: "Your notifications" },
   },
   {
     path: "/saved",
@@ -154,18 +146,10 @@ export const routes: RouteConfig[] = [
     meta: { description: "Account and app settings" },
   },
 
-  // More section routes
+  // Blood Donation route
   {
-    path: "/more",
-    component: lazy(() => import("../pages/MainMore")),
-    requireAuth: true,
-    title: "More",
-    category: "utility",
-    meta: { description: "Additional features and services" },
-  },
-  {
-    path: "/more/blood-donation",
-    component: lazy(() => import("../pages/MainMore/BloodDonation")),
+    path: "/blood-donation",
+    component: lazy(() => import("../pages/BloodDonation")),
     requireAuth: true,
     title: "Blood Donation",
     category: "utility",

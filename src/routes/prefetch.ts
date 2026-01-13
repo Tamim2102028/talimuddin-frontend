@@ -8,7 +8,6 @@ const pathToImporter: Record<string, Importer> = {
   "/classroom": () => import("../pages/ClassRoom"),
   "/search": () => import("../pages/Search"),
   "/notifications": () => import("../pages/Notifications"),
-  "/messages": () => import("../pages/Messages"),
   "/saved": () => import("../pages/Saved"),
   "/profile": () => import("../pages/Profile/Profile"),
   "/settings": () => import("../pages/Settings"),

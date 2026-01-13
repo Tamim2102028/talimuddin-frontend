@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaEnvelope, FaHome } from "react-icons/fa";
+import { FaHome, FaTint } from "react-icons/fa";
 import { authHooks } from "../hooks/useAuth";
 
 const Navbar: React.FC = () => {
@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
 
   const navItems = [
     { to: "/", icon: FaHome, label: "Home" },
-    { to: "/messages", icon: FaEnvelope, label: "Messages", badge: 2 },
+    { to: "/blood-donation", icon: FaTint, label: "Blood Donation" },
   ];
 
   return (

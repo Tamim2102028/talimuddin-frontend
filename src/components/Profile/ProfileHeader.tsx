@@ -1,19 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  FaEdit,
-  FaInfoCircle,
-  FaEllipsisV,
-  FaLink,
-  FaEnvelope,
-} from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaEdit, FaInfoCircle, FaEllipsisV, FaLink } from "react-icons/fa";
 import type { ProfileHeaderData } from "../../types";
 import { toast } from "sonner";
 
 const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
   const { user: userData, meta } = data;
   const { isOwnProfile } = meta;
-  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -27,11 +20,6 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const handleMessage = (userId: string) => {
-    console.log("Message user:", userId);
-    navigate("/messages");
-  };
 
   const handleCopyLink = () => {
     const profileUrl = window.location.href;
@@ -68,19 +56,10 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
     // Other user's profile
     return (
       <div className="flex items-center gap-3">
-        {/* Message Button */}
-        <button
-          onClick={() => handleMessage(userData._id)}
-          className="flex items-center gap-2 rounded-md bg-green-600 px-6 py-2 text-white transition-colors hover:bg-green-700"
-        >
-          <FaEnvelope className="h-4 w-4" />
-          Message
-        </button>
-
         {/* View Details button */}
         <Link
           to={`/profile/${userData.userName}/details`}
-          className="flex items-center gap-2 rounded-md bg-gray-600 px-6 py-2 text-white transition-colors hover:bg-gray-700"
+          className="flex items-center gap-2 rounded-md bg-green-600 px-6 py-2 text-white transition-colors hover:bg-green-700"
         >
           <FaInfoCircle className="h-4 w-4" />
           Details

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import BloodDonationHeader from "../../components/MainMore/BloodDonation/BloodDonationHeader";
-import BloodDonationTabs from "../../components/MainMore/BloodDonation/BloodDonationTabs";
-import BloodRequestsTab from "../../components/MainMore/BloodDonation/BloodRequestsTab";
-import FindDonorsTab from "../../components/MainMore/BloodDonation/FindDonorsTab";
-import DonorListTab from "../../components/MainMore/BloodDonation/DonorListTab";
+import BloodDonationHeader from "../components/MainMore/BloodDonation/BloodDonationHeader";
+import BloodDonationTabs from "../components/MainMore/BloodDonation/BloodDonationTabs";
+import BloodRequestsTab from "../components/MainMore/BloodDonation/BloodRequestsTab";
+import FindDonorsTab from "../components/MainMore/BloodDonation/FindDonorsTab";
+import DonorListTab from "../components/MainMore/BloodDonation/DonorListTab";
 
 const BloodDonation: React.FC = () => {
-  // TODO: Replace with API data or local state
   const [activeTab, setActiveTab] = useState<
     "requests" | "donors" | "donorList"
   >("requests");
@@ -14,7 +13,12 @@ const BloodDonation: React.FC = () => {
   return (
     <div className="mx-auto min-h-screen max-w-7xl space-y-5">
       <BloodDonationHeader />
-      <BloodDonationTabs />
+      <BloodDonationTabs
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        requestsCount={0}
+        donorsCount={0}
+      />
 
       {activeTab === "requests" && <BloodRequestsTab />}
       {activeTab === "donors" && <FindDonorsTab />}

@@ -24,13 +24,13 @@ const Profile: React.FC = () => {
     data: profileData,
     isLoading,
     error,
-  } = profileHooks.useProfileHeader(profileUsername);
+  } = profileHooks.useProfileHeader(profileUsername || "");
 
   if (isLoading) {
     return <ProfileHeaderSkeleton />;
   }
 
-  if (error || !profileData) {
+  if (error || !profileData || !profileUsername) {
     return <ProfileNotFound />;
   }
 

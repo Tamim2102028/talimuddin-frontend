@@ -5,11 +5,9 @@ import {
   FaCog,
   FaBell,
   FaSchool,
-  FaEllipsisH,
   FaSignOutAlt,
   FaSearch,
   FaBookmark,
-  FaEnvelope,
 } from "react-icons/fa";
 import { prefetchRoute } from "../routes/prefetch";
 import { authHooks } from "../hooks/useAuth";
@@ -43,22 +41,10 @@ const Sidebar: React.FC = () => {
       badge: 5,
     },
     {
-      icon: FaEnvelope,
-      label: "Messages",
-      path: "/messages",
-      active: location.pathname.startsWith("/messages"),
-    },
-    {
       icon: FaBookmark,
       label: "Saved",
       path: "/saved",
       active: location.pathname.startsWith("/saved"),
-    },
-    {
-      icon: FaEllipsisH,
-      label: "More",
-      path: "/more",
-      active: location.pathname.startsWith("/more"),
     },
     {
       icon: FaCog,
