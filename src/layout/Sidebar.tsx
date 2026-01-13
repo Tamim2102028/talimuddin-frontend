@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
           <span className="text-lg font-semibold text-gray-900">
             Talimuddin
           </span>
-          <span className="text-sm text-gray-500">Islamic Academy</span>
+          <span className="text-sm font-medium text-gray-500">Islamic Academy</span>
         </div>
       </NavLink>
 

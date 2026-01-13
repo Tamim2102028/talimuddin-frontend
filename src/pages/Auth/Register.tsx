@@ -29,6 +29,10 @@ const registerSchema = z.object({
       "Username can only contain letters, numbers, and underscores"
     ),
 
+  gender: z.enum(["male", "female"], {
+    message: "Please select your gender",
+  }),
+
   password: z
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -58,6 +62,7 @@ const Register = () => {
       fullName: "",
       phoneNumber: "",
       userName: "",
+      gender: undefined,
       password: "",
       agreeToTerms: undefined,
     },
@@ -152,13 +157,41 @@ const Register = () => {
                 className={`w-full rounded-lg border px-3 py-2 transition-colors focus:ring-2 focus:outline-none ${
                   errors.userName
                     ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    : "border-gray-300 focus:border-green-500 focus:ring-green-500"
                 }`}
                 placeholder="Choose a username (e.g., user_123)"
               />
               {errors.userName && (
                 <p className="mt-1 text-sm text-red-500">
                   {errors.userName.message}
+                </p>
+              )}
+            </div>
+
+            {/* Gender Field */}
+            <div>
+              <label
+                htmlFor="gender"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
+                Gender
+              </label>
+              <select
+                id="gender"
+                {...registerField("gender")}
+                className={`w-full appearance-none rounded-lg border px-3 py-2 transition-colors focus:ring-2 focus:outline-none ${
+                  errors.gender
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:border-green-500 focus:ring-green-500"
+                }`}
+              >
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              {errors.gender && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.gender.message}
                 </p>
               )}
             </div>

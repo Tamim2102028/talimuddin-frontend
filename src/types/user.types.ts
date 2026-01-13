@@ -119,6 +119,7 @@ export interface RegisterData {
   fullName: string;
   phoneNumber: string;
   userName: string;
+  gender: "male" | "female";
   password: string;
   agreeToTerms: boolean;
 }
