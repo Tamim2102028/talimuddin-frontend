@@ -38,8 +38,8 @@ export const authService = {
   },
 
   // Logout user
-  logout: async (): Promise<ApiResponse<object>> => {
-    const response = await api.post<ApiResponse<object>>("/users/logout");
+  logout: async (): Promise<ApiResponse<null>> => {
+    const response = await api.post<ApiResponse<null>>("/users/logout");
     return response.data;
   },
 

@@ -104,10 +104,6 @@ export interface AuthState {
   isCheckingAuth: boolean;
 }
 
-export interface AuthResponse {
-  user: User;
-}
-
 // Login Types
 export interface LoginCredentials {
   phoneNumber: string;
