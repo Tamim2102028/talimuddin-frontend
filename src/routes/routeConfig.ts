@@ -61,14 +61,6 @@ export const routes: RouteConfig[] = [
   },
 
   // Utility routes
-  {
-    path: "/search",
-    component: lazy(() => import("../pages/Search")),
-    requireAuth: true,
-    title: "Search",
-    category: "utility",
-    meta: { description: "Search across the platform" },
-  },
 
   // Social features
   {

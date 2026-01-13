@@ -1,7 +1,8 @@
 import React from "react";
-import FriendCard from "../../shared/friends/FriendCard";
+import UserCard from "../../shared/users/UserCard";
 import { showError } from "../../../utils/sweetAlert";
 import { showMemberMenu } from "../../../utils/customModals";
+import type { User } from "../../../types";
 
 // TODO: Replace with API types
 type UserData = {
@@ -37,14 +38,6 @@ const MembersTab: React.FC<Props> = ({
   onRemoveAdmin,
 }) => {
   const currentUser = users.find((u) => u.id === currentUserId);
-
-  // TODO: Replace with API data
-  const allFriendships: { user1Id: string; user2Id: string }[] = [];
-  const allFriendRequests: {
-    status: string;
-    senderId: string;
-    receiverId: string;
-  }[] = [];
 
   // Filter room members
   const roomMembers = members.filter((m) => m.roomId === roomId);
@@ -115,75 +108,59 @@ const MembersTab: React.FC<Props> = ({
         Members ({roomMembers?.length || 0})
       </h2>
       <div className="mt-3 space-y-2.5">
-        {roomMembers && roomMembers.length > 0
-          ? roomMembers.map((membership) => {
-              const user = users.find((u) => u.id === membership.userId);
-              if (!user) return null;
+        {roomMembers &&
+          roomMembers.map((membership) => {
+            const user = users.find((u) => u.id === membership.userId);
+            if (!user) return null;
 
-              // Check friendship status from Redux data
-              const isFriend = currentUser
-                ? allFriendships.some(
-                    (f) =>
-                      (f.user1Id === currentUser.id && f.user2Id === user.id) ||
-                      (f.user1Id === user.id && f.user2Id === currentUser.id)
-                  )
-                : false;
-              const hasPending = currentUser
-                ? allFriendRequests.some(
-                    (req) =>
-                      req.status === "pending" &&
-                      req.senderId === user.id &&
-                      req.receiverId === currentUser.id
-                  )
-                : false;
-              const hasSent = currentUser
-                ? allFriendRequests.some(
-                    (req) =>
-                      req.status === "pending" &&
-                      req.senderId === currentUser.id &&
-                      req.receiverId === user.id
-                  )
-                : false;
+            const isAdmin = !!admins && admins.includes(user.id);
 
-              let type: Parameters<typeof FriendCard>[0]["type"] = "search";
-              const isCurrent =
-                currentUser && membership.userId === currentUser.id;
-              if (isCurrent) type = "search";
-              else if (isFriend) type = "friend";
-              else if (hasPending) type = "request";
-              else if (hasSent) type = "sent";
-              else type = "suggestion";
+            const isCurrentUserCreator =
+              !!currentUser && !!creatorId && currentUser.id === creatorId;
+            const isCurrentUserAdmin =
+              !!currentUser && !!admins && admins.includes(currentUser.id);
 
-              const isAdmin = !!admins && admins.includes(user.id);
-              const isOwner = !!creatorId && user.id === creatorId;
+            const canShowMenu =
+              (isCurrentUserCreator || isCurrentUserAdmin) &&
+              user.id !== creatorId &&
+              user.id !== currentUser?.id;
 
-              const isCurrentUserCreator =
-                !!currentUser && !!creatorId && currentUser.id === creatorId;
-              const isCurrentUserAdmin =
-                !!currentUser && !!admins && admins.includes(currentUser.id);
+            // Convert UserData to User type for UserCard
+            const userForCard: User = {
+              _id: user.id,
+              fullName: user.name,
+              userName: user.id, // TODO: Get actual userName from API
+              avatar: user.avatar || "",
+              email: "",
+              coverImage: "",
+              postsCount: 0,
+              connectionsCount: 0,
+              followersCount: 0,
+              followingCount: 0,
+              publicFilesCount: 0,
+              userType: "normal",
+              accountStatus: "ACTIVE",
+              restrictions: {
+                isCommentBlocked: false,
+                isPostBlocked: false,
+                isMessageBlocked: false,
+              },
+              agreedToTerms: true,
+              createdAt: "",
+              updatedAt: "",
+            };
 
-              // Show menu if:
-              // - Current user is creator/admin AND
-              // - Target user is not the creator (creator can't be removed) AND
-              // - Target user is not the current user themselves (can't manage yourself)
-              const canShowMenu =
-                (isCurrentUserCreator || isCurrentUserAdmin) &&
-                user.id !== creatorId &&
-                user.id !== currentUser?.id;
-
-              return (
-                <FriendCard
-                  key={user.id}
-                  isOwner={isOwner}
-                  isAdmin={isAdmin}
-                  friend={user}
-                  type={type}
-                  canShowMenu={canShowMenu}
-                  handleMemberMenu={handleMemberMenu}
-                />
-              );
-            })
-          : null}
+            return (
+              <UserCard
+                key={user.id}
+                user={userForCard}
+                canShowMenu={canShowMenu}
+                handleMemberMenu={(userId, userName) =>
+                  handleMemberMenu(userId, userName, isAdmin)
+                }
+              />
+            );
+          })}
       </div>
     </div>
   );

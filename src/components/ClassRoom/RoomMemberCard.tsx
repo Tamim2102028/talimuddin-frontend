@@ -1,16 +1,5 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import {
-  MessageButton,
-  UnfriendButton,
-  AcceptButton,
-  RejectButton,
-  AddFriendButton,
-  CancelRequestButton,
-  UnblockButton,
-} from "../shared/friends/FriendActions";
-import { friendshipHooks } from "../../hooks/useFriendship";
-import confirm from "../../utils/sweetAlert";
+import { NavLink } from "react-router-dom";
 
 interface RoomMemberItem {
   user: {
@@ -18,19 +7,11 @@ interface RoomMemberItem {
     fullName: string;
     userName: string;
     avatar: string;
-    institution?: {
-      name: string;
-    };
   };
   meta: {
     memberId: string;
     role: string;
     isSelf: boolean;
-    isFriend: boolean;
-    hasPendingRequest: boolean;
-    isSentRequest: boolean;
-    isBlockedByMe: boolean;
-    isBlockedByThem: boolean;
     isCR: boolean;
     isAdmin: boolean;
     isCreator: boolean;
@@ -43,89 +24,7 @@ interface RoomMemberCardProps {
 }
 
 const RoomMemberCard: React.FC<RoomMemberCardProps> = ({ member }) => {
-  const navigate = useNavigate();
   const { user, meta } = member;
-
-  // Friendship mutations
-  const { mutate: acceptRequest } = friendshipHooks.useAcceptFriendRequest();
-  const { mutate: rejectRequest } = friendshipHooks.useRejectFriendRequest();
-  const { mutate: sendRequest } = friendshipHooks.useSendFriendRequest();
-  const { mutate: cancelRequest } = friendshipHooks.useCancelFriendRequest();
-  const { mutate: unfriend } = friendshipHooks.useUnfriendUser();
-  const { mutate: unblock } = friendshipHooks.useUnblockUser();
-
-  // Friendship action handlers
-  const handleMessage = () => {
-    navigate("/messages");
-  };
-
-  const handleAccept = () => {
-    acceptRequest({ requesterId: user._id });
-  };
-
-  const handleDecline = () => {
-    rejectRequest({ requesterId: user._id });
-  };
-
-  const handleAddFriend = () => {
-    sendRequest({ userId: user._id });
-  };
-
-  const handleCancelRequest = () => {
-    cancelRequest({ recipientId: user._id });
-  };
-
-  const handleUnfriend = async () => {
-    const ok = await confirm({
-      title: "Are you sure?",
-      text: "You will remove this friend.",
-      confirmButtonText: "Yes, unfriend",
-      icon: "warning",
-    });
-    if (ok) {
-      unfriend({ friendId: user._id });
-    }
-  };
-
-  const handleUnblock = () => {
-    unblock({ userId: user._id });
-  };
-
-  // Render friendship action buttons
-  const renderActions = () => {
-    if (meta.isSelf) return null;
-    if (meta.isBlockedByThem) return null;
-
-    if (meta.isBlockedByMe) {
-      return <UnblockButton onClick={handleUnblock} />;
-    }
-
-    if (meta.isFriend) {
-      return (
-        <div className="flex items-center space-x-2">
-          <MessageButton onClick={handleMessage} />
-          <UnfriendButton onClick={handleUnfriend} />
-        </div>
-      );
-    }
-
-    if (meta.hasPendingRequest) {
-      return (
-        <div className="flex space-x-2">
-          <AcceptButton onClick={handleAccept} />
-          <RejectButton onClick={handleDecline} />
-        </div>
-      );
-    }
-
-    if (meta.isSentRequest) {
-      return <CancelRequestButton onClick={handleCancelRequest} />;
-    }
-
-    return <AddFriendButton onClick={handleAddFriend} />;
-  };
-
-  const institutionName = user.institution?.name || "No Institution";
 
   // Role badge
   const getRoleBadge = () => {
@@ -156,7 +55,9 @@ const RoomMemberCard: React.FC<RoomMemberCardProps> = ({ member }) => {
   return (
     <div
       className={`flex items-center space-x-3 rounded-lg border p-2 shadow-sm ${
-        meta.isSelf ? "border-blue-200 bg-blue-50" : "border-gray-300 bg-white"
+        meta.isSelf
+          ? "border-green-200 bg-green-50"
+          : "border-gray-300 bg-white"
       }`}
     >
       <NavLink to={`/profile/${user.userName}`}>
@@ -170,15 +71,14 @@ const RoomMemberCard: React.FC<RoomMemberCardProps> = ({ member }) => {
         <h3 className="flex items-center">
           <NavLink
             to={`/profile/${user.userName}`}
-            className="font-medium text-gray-800 transition-colors hover:text-blue-600 hover:underline"
+            className="font-medium text-gray-800 transition-colors hover:text-green-600 hover:underline"
           >
             {user.fullName}
           </NavLink>
           {getRoleBadge()}
         </h3>
-        <p className="text-sm font-medium text-gray-500">{institutionName}</p>
+        <p className="text-sm font-medium text-gray-500">@{user.userName}</p>
       </div>
-      <div className="flex items-center gap-2">{renderActions()}</div>
     </div>
   );
 };

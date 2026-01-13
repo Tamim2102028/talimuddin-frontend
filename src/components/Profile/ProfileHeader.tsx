@@ -135,7 +135,7 @@ const ProfileHeader: React.FC<{ data: ProfileHeaderData }> = ({ data }) => {
               {userData.fullName}
             </h1>
 
-            <p className="text-sm text-gray-600">@{userData.userName}</p>
+            <p className="text-sm font-medium text-gray-600">@{userData.userName}</p>
 
             {/* Bio */}
             <p className="mt-3 max-w-prose text-base leading-relaxed font-medium text-gray-600">

@@ -6,7 +6,6 @@ import {
   FaBell,
   FaSchool,
   FaSignOutAlt,
-  FaSearch,
   FaBookmark,
 } from "react-icons/fa";
 import { prefetchRoute } from "../routes/prefetch";
@@ -21,12 +20,6 @@ const Sidebar: React.FC = () => {
   const profilePath = user?.userName ? `/profile/${user.userName}` : "/profile";
 
   const navigationItems = [
-    {
-      icon: FaSearch,
-      label: "Search",
-      path: "/search",
-      active: location.pathname.startsWith("/search"),
-    },
     {
       icon: FaSchool,
       label: "ClassRoom",
@@ -68,7 +61,9 @@ const Sidebar: React.FC = () => {
           <span className="text-lg font-semibold text-gray-900">
             Talimuddin
           </span>
-          <span className="text-sm font-medium text-gray-500">Islamic Academy</span>
+          <span className="text-sm font-medium text-gray-500">
+            Islamic Academy
+          </span>
         </div>
       </NavLink>
 

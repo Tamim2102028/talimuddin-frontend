@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import {
-  ProfileHeader,
-  ProfilePosts,
-  PublicFiles,
-  ProfileTabs,
-  CreateProfilePost,
-  ProfileNotFound,
-} from "../../components/Profile";
 import { authHooks } from "../../hooks/useAuth";
 import { profileHooks } from "../../hooks/useProfile";
 import ProfileHeaderSkeleton from "../../components/shared/skeletons/ProfileHeaderSkeleton";
+import ProfileNotFound from "../../components/Profile/ProfileNotFound";
+import ProfileHeader from "../../components/Profile/ProfileHeader";
+import CreateProfilePost from "../../components/Profile/CreateProfilePost";
+import ProfilePosts from "../../components/Profile/ProfilePosts";
 
 const Profile: React.FC = () => {
   const { username } = useParams<{ username: string }>();
-  const [activeTab, setActiveTab] = useState<"posts" | "files">("posts");
 
   const { user: currentUser } = authHooks.useUser();
 
@@ -41,35 +36,14 @@ const Profile: React.FC = () => {
     <>
       <ProfileHeader data={profileData} />
 
-      <ProfileTabs
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        isOwnProfile={isOwnProfile}
-        data={profileData}
-      />
-
-      {/* Tab Content */}
-      <div>
-        {activeTab === "posts" && (
-          <div className="space-y-3">
-            {/* Create Post Section (Only for Own Profile) */}
-            {isOwnProfile && currentUser?._id && (
-              <div className="mb-4">
-                <CreateProfilePost />
-              </div>
-            )}
-            <ProfilePosts
-              username={user.userName}
-              isOwnProfile={isOwnProfile}
-            />
+      <div className="space-y-3">
+        {/* Create Post Section (Only for Own Profile) */}
+        {isOwnProfile && currentUser?._id && (
+          <div className="mb-4">
+            <CreateProfilePost />
           </div>
         )}
-
-        {activeTab === "files" && (
-          <div className="space-y-3">
-            <PublicFiles username={user.userName} isOwnProfile={isOwnProfile} />
-          </div>
-        )}
+        <ProfilePosts username={user.userName} isOwnProfile={isOwnProfile} />
       </div>
     </>
   );

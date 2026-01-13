@@ -1,6 +1,6 @@
 import React from "react";
 import RoomMemberCard from "../RoomMemberCard";
-import FriendCardSkeleton from "../../shared/skeletons/FriendCardSkeleton";
+import UserCardSkeleton from "../../shared/skeletons/UserCardSkeleton";
 import { roomHooks } from "../../../hooks/useRoom";
 
 const RoomMembersTab: React.FC = () => {
@@ -22,7 +22,7 @@ const RoomMembersTab: React.FC = () => {
     return (
       <div className="space-y-3">
         {[...Array(5)].map((_, i) => (
-          <FriendCardSkeleton key={i} />
+          <UserCardSkeleton key={i} />
         ))}
       </div>
     );

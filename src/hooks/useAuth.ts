@@ -7,8 +7,11 @@ import type {
   AuthState,
   ApiError,
   RegisterData,
+  User,
+  ApiResponse,
 } from "../types";
 import type { AxiosError } from "axios";
+import type { UseMutationResult } from "@tanstack/react-query";
 
 // Query Keys
 const AUTH_KEYS = {
@@ -47,7 +50,11 @@ const useUser = (): AuthState => {
 };
 
 // Register
-const useRegister = () => {
+const useRegister = (): UseMutationResult<
+  ApiResponse<{ user: User }>,
+  AxiosError<ApiError>,
+  { userData: RegisterData }
+> => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -67,7 +74,11 @@ const useRegister = () => {
 };
 
 // Login
-const useLogin = () => {
+const useLogin = (): UseMutationResult<
+  ApiResponse<{ user: User }>,
+  AxiosError<ApiError>,
+  { credentials: LoginCredentials }
+> => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -86,7 +97,11 @@ const useLogin = () => {
 };
 
 // Logout
-const useLogout = () => {
+const useLogout = (): UseMutationResult<
+  ApiResponse<null>,
+  AxiosError<ApiError>,
+  void
+> => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -109,7 +124,11 @@ const useLogout = () => {
 };
 
 // Change Password
-const useChangePassword = () => {
+const useChangePassword = (): UseMutationResult<
+  ApiResponse<null>,
+  AxiosError<ApiError>,
+  { oldPassword: string; newPassword: string }
+> => {
   return useMutation({
     mutationFn: (data: { oldPassword: string; newPassword: string }) =>
       authService.changePassword(data),
