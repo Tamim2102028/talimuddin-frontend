@@ -58,5 +58,5 @@ export interface CommentItemProps {
   onLikeComment?: (commentId: string) => void;
   onDeleteComment?: (commentId: string) => void;
   onUpdateComment?: (commentId: string, content: string) => void;
-  hideLike?: boolean; // Hide like button for specific contexts (e.g., Room posts)
+  hideLike?: boolean; // Hide like button for specific contexts (e.g., Branch posts)
 }

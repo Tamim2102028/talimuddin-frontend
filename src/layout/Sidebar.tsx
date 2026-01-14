@@ -22,19 +22,19 @@ const Sidebar: React.FC = () => {
   const navigationItems = [
     {
       icon: FaSchool,
-      label: "ClassRoom",
-      path: "/classroom",
-      active: location.pathname.startsWith("/classroom"),
+      label: "ClassBranch",
+      path: "/classbranch",
+      active: location.pathname.startsWith("/classbranch"),
       subItems: [
         {
-          label: "All Rooms",
-          path: "/classroom",
-          active: location.pathname === "/classroom",
+          label: "All Branches",
+          path: "/classbranch",
+          active: location.pathname === "/classbranch",
         },
         {
-          label: "My Rooms",
-          path: "/classroom/my",
-          active: location.pathname === "/classroom/my",
+          label: "My Branches",
+          path: "/classbranch/my",
+          active: location.pathname === "/classbranch/my",
         },
       ],
     },

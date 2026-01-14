@@ -226,8 +226,8 @@ export const inputGroupName = () =>
 
 export const inputRoomName = () =>
   showInput({
-    title: "Create New Room",
-    inputPlaceholder: "Enter room name",
+    title: "Create New Branch",
+    inputPlaceholder: "Enter Branch name",
     confirmButtonText: "Create",
     maxLength: 100,
   });
