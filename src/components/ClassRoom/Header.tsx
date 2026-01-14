@@ -13,8 +13,9 @@ const Header: React.FC = () => {
     user?.userType === USER_TYPES.OWNER ||
     user?.userType === USER_TYPES.TEACHER;
 
-  // Only show buttons on main classroom page
-  const showButtons = location.pathname === "/classroom";
+  // Only show buttons on main classroom pages
+  const showButtons =
+    location.pathname === "/classroom" || location.pathname === "/classroom/my";
 
   return (
     <header className="flex items-center justify-between">

@@ -7,6 +7,8 @@ import {
   FaSchool,
   FaSignOutAlt,
   FaBookmark,
+  FaHome,
+  FaTint,
 } from "react-icons/fa";
 import { prefetchRoute } from "../routes/prefetch";
 import { authHooks } from "../hooks/useAuth";
@@ -21,22 +23,28 @@ const Sidebar: React.FC = () => {
 
   const navigationItems = [
     {
+      icon: FaHome,
+      label: "Home",
+      path: "/",
+      active: location.pathname === "/",
+    },
+    {
+      icon: FaTint,
+      label: "Blood Donation",
+      path: "/blood-donation",
+      active: location.pathname.startsWith("/blood-donation"),
+    },
+    {
       icon: FaSchool,
-      label: "ClassRoom",
+      label: "All Rooms",
       path: "/classroom",
-      active: location.pathname.startsWith("/classroom"),
-      subItems: [
-        {
-          label: "All Rooms",
-          path: "/classroom",
-          active: location.pathname === "/classroom",
-        },
-        {
-          label: "My Rooms",
-          path: "/classroom/my",
-          active: location.pathname === "/classroom/my",
-        },
-      ],
+      active: location.pathname === "/classroom",
+    },
+    {
+      icon: FaSchool,
+      label: "My Rooms",
+      path: "/classroom/my",
+      active: location.pathname === "/classroom/my",
     },
     {
       icon: FaBell,
@@ -111,25 +119,6 @@ const Sidebar: React.FC = () => {
                   </span>
                 )}
               </NavLink>
-
-              {/* Sub-items */}
-              {item.subItems && item.active && (
-                <div className="mt-1 ml-8 space-y-1">
-                  {item.subItems.map((subItem, subIndex) => (
-                    <NavLink
-                      key={subIndex}
-                      to={subItem.path}
-                      className={`block rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                        subItem.active
-                          ? "bg-green-100 text-green-700"
-                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                      }`}
-                    >
-                      {subItem.label}
-                    </NavLink>
-                  ))}
-                </div>
-              )}
             </div>
           ))}
         </nav>
