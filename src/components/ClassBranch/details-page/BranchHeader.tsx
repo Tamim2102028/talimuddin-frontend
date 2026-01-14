@@ -1,13 +1,13 @@
 import React from "react";
-import type { Branch, RoomMeta } from "../../../types";
-import RoomDetailsNavBar from "./RoomDetailsNavBar";
+import type { Branch, BranchMeta } from "../../../types";
+import BranchDetailsNavBar from "./BranchDetailsNavBar";
 
-interface RoomHeaderProps {
+interface BranchHeaderProps {
   Branch: Branch;
-  meta: RoomMeta;
+  meta: BranchMeta;
 }
 
-const RoomHeader: React.FC<RoomHeaderProps> = ({ Branch, meta }) => {
+const BranchHeader: React.FC<BranchHeaderProps> = ({ Branch, meta }) => {
   return (
     <div className="relative">
       <img
@@ -65,7 +65,7 @@ const RoomHeader: React.FC<RoomHeaderProps> = ({ Branch, meta }) => {
                 {Branch.description && (
                   <p className="mt-4 text-gray-700">{Branch.description}</p>
                 )}
-                <RoomDetailsNavBar />
+                <BranchDetailsNavBar />
               </div>
             </div>
           </div>
@@ -75,4 +75,4 @@ const RoomHeader: React.FC<RoomHeaderProps> = ({ Branch, meta }) => {
   );
 };
 
-export default RoomHeader;
+export default BranchHeader;

@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "../components/ClassBranch/Header";
-import Branches from "../components/ClassBranch/Tabs/Branchs";
+import Branches from "../components/ClassBranch/Tabs/Branches";
 import PageLoader from "./Fallbacks/PageLoader";
 
 // Lazy load pages

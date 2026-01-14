@@ -4,23 +4,23 @@ import { useNavigate } from "react-router-dom";
 import { branchHooks } from "../../hooks/useBranch";
 import { useState, useRef, useEffect } from "react";
 
-export type RoomFormValues = {
+export type BranchFormValues = {
   name: string;
   description?: string;
-  roomType: string;
+  branchType: string;
   allowStudentPosting?: boolean;
   allowComments?: boolean;
 };
 
-const RoomForm = () => {
+const BranchForm = () => {
   const navigate = useNavigate();
-  const [showRoomTypeDropdown, setShowRoomTypeDropdown] = useState(false);
-  const roomTypeRef = useRef<HTMLDivElement>(null);
+  const [showBranchTypeDropdown, setShowBranchTypeDropdown] = useState(false);
+  const branchTypeRef = useRef<HTMLDivElement>(null);
 
-  const { mutate: createRoom } = branchHooks.useCreateRoom();
+  const { mutate: createBranch } = branchHooks.useCreateBranch();
 
-  const handleCreate = (data: RoomFormValues) => {
-    createRoom(data, {
+  const handleCreate = (data: BranchFormValues) => {
+    createBranch(data, {
       onSuccess: () => {
         navigate("/ClassBranch");
       },
@@ -28,11 +28,11 @@ const RoomForm = () => {
   };
 
   const { register, handleSubmit, formState, control } =
-    useForm<RoomFormValues>({
+    useForm<BranchFormValues>({
       defaultValues: {
         name: "",
         description: "",
-        roomType: "MAIN_BRANCH",
+        branchType: "MAIN_BRANCH",
         allowStudentPosting: true,
         allowComments: true,
       },
@@ -40,24 +40,24 @@ const RoomForm = () => {
 
   const { errors } = formState;
 
-  const roomTypes = [
+  const branchTypes = [
     { value: "MAIN_BRANCH", label: "Main Branch" },
     { value: "SUB_BRANCH", label: "Sub Branch" },
   ];
 
-  const getRoomTypeLabel = (value: string) => {
+  const getBranchTypeLabel = (value: string) => {
     return (
-      roomTypes.find((type) => type.value === value)?.label || "Select Type"
+      branchTypes.find((type) => type.value === value)?.label || "Select Type"
     );
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        roomTypeRef.current &&
-        !roomTypeRef.current.contains(event.target as Node)
+        branchTypeRef.current &&
+        !branchTypeRef.current.contains(event.target as Node)
       ) {
-        setShowRoomTypeDropdown(false);
+        setShowBranchTypeDropdown(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -121,35 +121,37 @@ const RoomForm = () => {
           Branch Type <span className="text-red-500">*</span>
         </label>
         <Controller
-          name="roomType"
+          name="branchType"
           control={control}
           rules={{ required: "Branch type is required" }}
           render={({ field }) => (
-            <div className="relative" ref={roomTypeRef}>
+            <div className="relative" ref={branchTypeRef}>
               <button
                 type="button"
-                onClick={() => setShowRoomTypeDropdown(!showRoomTypeDropdown)}
+                onClick={() =>
+                  setShowBranchTypeDropdown(!showBranchTypeDropdown)
+                }
                 className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-3 text-left text-gray-900 shadow-sm transition-colors hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
                 <span className="font-medium">
-                  {getRoomTypeLabel(field.value)}
+                  {getBranchTypeLabel(field.value)}
                 </span>
                 <FaChevronDown
                   className={`h-4 w-4 text-gray-500 transition-transform ${
-                    showRoomTypeDropdown ? "rotate-180" : ""
+                    showBranchTypeDropdown ? "rotate-180" : ""
                   }`}
                 />
               </button>
 
-              {showRoomTypeDropdown && (
+              {showBranchTypeDropdown && (
                 <div className="absolute top-full left-0 z-50 mt-2 w-full rounded-lg border border-gray-200 bg-white shadow-lg">
-                  {roomTypes.map((type) => (
+                  {branchTypes.map((type) => (
                     <button
                       key={type.value}
                       type="button"
                       onClick={() => {
                         field.onChange(type.value);
-                        setShowRoomTypeDropdown(false);
+                        setShowBranchTypeDropdown(false);
                       }}
                       className={`flex w-full items-center px-4 py-3 text-left transition-colors hover:bg-gray-50 ${
                         field.value === type.value ? "bg-blue-50" : ""
@@ -171,9 +173,9 @@ const RoomForm = () => {
             </div>
           )}
         />
-        {errors.roomType?.message && (
+        {errors.branchType?.message && (
           <p className="mt-1.5 text-sm text-red-600">
-            {errors.roomType.message}
+            {errors.branchType.message}
           </p>
         )}
       </div>
@@ -239,4 +241,4 @@ const RoomForm = () => {
   );
 };
 
-export default RoomForm;
+export default BranchForm;

@@ -27,12 +27,12 @@ import { commentHooks } from "../../hooks/common/useComment";
 import { ATTACHMENT_TYPES } from "../../constants";
 import confirm from "../../utils/sweetAlert";
 
-interface RoomPostCardProps {
+interface BranchPostCardProps {
   post: Post;
   meta: PostMeta;
 }
 
-const RoomPostCard: React.FC<RoomPostCardProps> = ({ post, meta }) => {
+const BranchPostCard: React.FC<BranchPostCardProps> = ({ post, meta }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [openUpward, setOpenUpward] = useState(false);
@@ -66,13 +66,13 @@ const RoomPostCard: React.FC<RoomPostCardProps> = ({ post, meta }) => {
 
   // Post hooks
   const { mutate: deletePost, isPending: isDeleting } =
-    branchHooks.useDeleteRoomPost();
+    branchHooks.useDeleteBranchPost();
   const { mutate: updatePost, isPending: isUpdating } =
-    branchHooks.useUpdateRoomPost();
+    branchHooks.useUpdateBranchPost();
   const { mutate: toggleReadStatus, isPending: isTogglingRead } =
-    branchHooks.useToggleReadStatusRoomPost();
+    branchHooks.useToggleReadStatusBranchPost();
   const { mutate: toggleBookmark, isPending: isBookmarking } =
-    branchHooks.useToggleBookmarkRoomPost();
+    branchHooks.useToggleBookmarkBranchPost();
 
   // Comment hooks
   const {
@@ -87,10 +87,10 @@ const RoomPostCard: React.FC<RoomPostCardProps> = ({ post, meta }) => {
   });
 
   const { mutate: addComment, isPending: isAddingComment } =
-    branchHooks.useAddRoomComment({
+    branchHooks.useAddBranchComment({
       postId: post._id,
     });
-  const { mutate: deleteComment } = branchHooks.useDeleteRoomComment({
+  const { mutate: deleteComment } = branchHooks.useDeleteBranchComment({
     postId: post._id,
   });
   const { mutate: updateComment } = commentHooks.useUpdateComment({
@@ -514,4 +514,4 @@ const RoomPostCard: React.FC<RoomPostCardProps> = ({ post, meta }) => {
   );
 };
 
-export default RoomPostCard;
+export default BranchPostCard;

@@ -22,12 +22,13 @@ const createbranchPostschema = z.object({
   visibility: z.string(),
 });
 
-type CreateRoomPostFormData = z.infer<typeof createbranchPostschema>;
+type CreateBranchPostFormData = z.infer<typeof createbranchPostschema>;
 
-const CreateRoomPost: React.FC = () => {
-  const { roomId } = useParams<{ roomId: string }>();
+const CreateBranchPost: React.FC = () => {
+  const { branchId } = useParams<{ branchId: string }>();
   const { user } = authHooks.useUser();
-  const { mutate: createRoomPost, isPending } = branchHooks.useCreateRoomPost();
+  const { mutate: createBranchPost, isPending } =
+    branchHooks.useCreateBranchPost();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const {
@@ -37,7 +38,7 @@ const CreateRoomPost: React.FC = () => {
     watch,
     reset,
     formState: { isValid },
-  } = useForm<CreateRoomPostFormData>({
+  } = useForm<CreateBranchPostFormData>({
     resolver: zodResolver(createbranchPostschema),
     defaultValues: {
       content: "",
@@ -49,8 +50,8 @@ const CreateRoomPost: React.FC = () => {
   const privacy = watch("visibility");
   const postContent = watch("content");
 
-  const onSubmit = (data: CreateRoomPostFormData) => {
-    if (!roomId) return;
+  const onSubmit = (data: CreateBranchPostFormData) => {
+    if (!branchId) return;
 
     // Process tags: split by comma or space, remove empty strings
     const processedTags = data.tags
@@ -60,10 +61,10 @@ const CreateRoomPost: React.FC = () => {
           .filter((tag) => tag.length > 0)
       : [];
 
-    createRoomPost(
+    createBranchPost(
       {
         ...data,
-        postOnId: roomId,
+        postOnId: branchId,
         postOnModel: POST_TARGET_MODELS.Branch,
         type: POST_TYPES.GENERAL,
         attachments: [],
@@ -260,4 +261,4 @@ const CreateRoomPost: React.FC = () => {
   );
 };
 
-export default CreateRoomPost;
+export default CreateBranchPost;

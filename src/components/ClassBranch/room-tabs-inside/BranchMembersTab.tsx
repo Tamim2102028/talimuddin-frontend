@@ -1,5 +1,5 @@
 import React from "react";
-import RoomMemberCard from "../RoomMemberCard";
+import BranchMemberCard from "../BranchMemberCard";
 import UserCardSkeleton from "../../shared/skeletons/UserCardSkeleton";
 import { branchHooks } from "../../../hooks/useBranch";
 
@@ -45,7 +45,7 @@ const branchMembersTab: React.FC = () => {
       {members.length > 0 ? (
         <div className="space-y-3">
           {members.map((member) => (
-            <RoomMemberCard
+            <BranchMemberCard
               key={member.meta.memberId}
               member={member}
               currentUserRole={currentUserRole}

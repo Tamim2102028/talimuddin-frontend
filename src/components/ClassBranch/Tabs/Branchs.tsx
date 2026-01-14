@@ -1,15 +1,15 @@
 import React from "react";
-import RoomCard from "../RoomCard";
-import { branchHooks } from "../../../hooks/useBranch";
 import { authHooks } from "../../../hooks/useAuth";
 import { USER_TYPES } from "../../../constants/user";
-import type { RoomListItem } from "../../../types";
+import type { BranchListItem } from "../../../types";
+import BranchCard from "../BranchCard";
+import { branchHooks } from "../../../hooks/useBranch";
 
-interface RoomsProps {
+interface BranchesProps {
   type: "all" | "my";
 }
 
-const Rooms: React.FC<RoomsProps> = ({ type }) => {
+const Branches: React.FC<BranchesProps> = ({ type }) => {
   const {
     data,
     fetchNextPage,
@@ -17,18 +17,19 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
     isFetchingNextPage,
     isLoading,
     isError,
-  } = type === "all" ? branchHooks.useallBranches() : branchHooks.usemyBranches();
+  } =
+    type === "all" ? branchHooks.useallBranches() : branchHooks.usemyBranches();
 
   const { user } = authHooks.useUser();
 
-  const rooms: RoomListItem[] =
-    data?.pages.flatMap((page) => page.data.rooms) || [];
+  const branches: BranchListItem[] =
+    data?.pages.flatMap((page) => page.data.branches) || [];
   const totalDocs = data?.pages[0]?.data.pagination.totalDocs || 0;
 
   if (isLoading) {
     return (
       <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
-        <p className="text-sm text-gray-600">Loading rooms...</p>
+        <p className="text-sm text-gray-600">Loading branches...</p>
       </div>
     );
   }
@@ -36,7 +37,7 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-300 bg-red-50 p-6 shadow">
-        <p className="text-sm text-red-600">Failed to load rooms</p>
+        <p className="text-sm text-red-600">Failed to load branches</p>
       </div>
     );
   }
@@ -46,17 +47,17 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
       {/* header */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-900">
-          {type === "all" ? "All Rooms" : "My Rooms"}{" "}
+          {type === "all" ? "All Branches" : "My Branches"}{" "}
           {totalDocs ? `(${totalDocs})` : ""}
         </h2>
       </div>
 
-      {/* no rooms message */}
-      {rooms.length === 0 ? (
+      {/* no branches message */}
+      {branches.length === 0 ? (
         <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
           <p className="text-center text-sm font-medium text-gray-600">
             {type === "all"
-              ? "No rooms available yet."
+              ? "No branches available yet."
               : user?.userType === USER_TYPES.TEACHER
                 ? "Create or join a Branch to get started."
                 : "Join a Branch to get started."}
@@ -65,8 +66,8 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
       ) : (
         <>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {rooms.map((r) => (
-              <RoomCard key={r._id} Branch={r} />
+            {branches.map((r) => (
+              <BranchCard key={r._id} Branch={r} />
             ))}
           </div>
 
@@ -100,4 +101,4 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
   );
 };
 
-export default Rooms;
+export default Branches;

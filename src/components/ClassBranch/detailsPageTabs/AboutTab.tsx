@@ -37,8 +37,8 @@ interface Props {
   memberCount?: number;
   users: UserData[];
   currentUserId?: string;
-  roomId?: string;
-  onDeleteRoom?: (id: string) => void;
+  branchId?: string;
+  onDeleteBranch?: (id: string) => void;
 }
 
 const AboutTab: React.FC<Props> = ({
@@ -48,11 +48,11 @@ const AboutTab: React.FC<Props> = ({
   memberCount = 0,
   users,
   currentUserId,
-  roomId,
-  onDeleteRoom,
+  branchId,
+  onDeleteBranch,
 }) => {
   const handleDelete = async () => {
-    if (!roomId || !onDeleteRoom) return;
+    if (!branchId || !onDeleteBranch) return;
     const ok = await confirm({
       title: "Delete Branch?",
       text: "This will mark the Branch as deleted and remove it from lists.",
@@ -60,7 +60,7 @@ const AboutTab: React.FC<Props> = ({
       icon: "warning",
     });
     if (!ok) return;
-    onDeleteRoom(roomId);
+    onDeleteBranch(branchId);
   };
 
   const isCreator =
@@ -161,7 +161,10 @@ const AboutTab: React.FC<Props> = ({
       </div>
 
       {/* Branch Details */}
-      {(Branch.university || Branch.department || Branch.year || Branch.semester) && (
+      {(Branch.university ||
+        Branch.department ||
+        Branch.year ||
+        Branch.semester) && (
         <div>
           <h3 className="mb-3 font-bold text-gray-900">Branch Details</h3>
           <div className="space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-4">
@@ -170,7 +173,9 @@ const AboutTab: React.FC<Props> = ({
                 <span className="text-sm font-medium text-gray-600">
                   University:
                 </span>
-                <span className="text-sm text-gray-900">{Branch.university}</span>
+                <span className="text-sm text-gray-900">
+                  {Branch.university}
+                </span>
               </div>
             )}
             {Branch.department && (
@@ -178,7 +183,9 @@ const AboutTab: React.FC<Props> = ({
                 <span className="text-sm font-medium text-gray-600">
                   Department:
                 </span>
-                <span className="text-sm text-gray-900">{Branch.department}</span>
+                <span className="text-sm text-gray-900">
+                  {Branch.department}
+                </span>
               </div>
             )}
             {Branch.year && (
@@ -208,7 +215,9 @@ const AboutTab: React.FC<Props> = ({
                 <span className="text-sm font-medium text-gray-600">
                   Subsection:
                 </span>
-                <span className="text-sm text-gray-900">{Branch.subsection}</span>
+                <span className="text-sm text-gray-900">
+                  {Branch.subsection}
+                </span>
               </div>
             )}
           </div>
@@ -244,7 +253,7 @@ const AboutTab: React.FC<Props> = ({
       )}
 
       {/* Delete Branch Button (Only for creator) */}
-      {isCreator && onDeleteRoom && (
+      {isCreator && onDeleteBranch && (
         <div className="border-t border-gray-200 pt-4">
           <h3 className="mb-3 font-bold text-red-600">Danger Zone</h3>
           <button
@@ -254,7 +263,8 @@ const AboutTab: React.FC<Props> = ({
             Delete Branch
           </button>
           <p className="mt-2 text-xs text-gray-500">
-            This action cannot be undone. The Branch will be permanently deleted.
+            This action cannot be undone. The Branch will be permanently
+            deleted.
           </p>
         </div>
       )}

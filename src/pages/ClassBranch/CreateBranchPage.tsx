@@ -1,7 +1,7 @@
 import React from "react";
-import RoomForm from "../../components/ClassBranch/RoomForm";
+import BranchForm from "../../components/ClassBranch/BranchForm";
 
-const CreateRoomPage: React.FC = () => {
+const CreateBranchPage: React.FC = () => {
   return (
     <>
       <div className="flex items-center justify-between">
@@ -9,10 +9,10 @@ const CreateRoomPage: React.FC = () => {
       </div>
 
       <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-        <RoomForm />
+        <BranchForm />
       </div>
     </>
   );
 };
 
-export default CreateRoomPage;
+export default CreateBranchPage;

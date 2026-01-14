@@ -2,7 +2,7 @@ import type { User } from "./user.types";
 import type { Pagination } from "./common.types";
 
 // Branch Types
-export type RoomType =
+export type BranchType =
   | "UNIVERSITY"
   | "COLLEGE"
   | "COACHING"
@@ -10,7 +10,7 @@ export type RoomType =
   | "GENERAL";
 
 // Branch Settings
-export interface RoomSettings {
+export interface BranchSettings {
   allowStudentPosting: boolean;
   allowComments: boolean;
 }
@@ -21,25 +21,25 @@ export interface Branch {
   name: string;
   description?: string;
   coverImage: string;
-  roomType: RoomType;
+  branchType: BranchType;
   joinCode: string;
   creator: User;
   membersCount: number;
   postsCount: number;
   isArchived: boolean;
   isDeleted: boolean;
-  settings: RoomSettings;
+  settings: BranchSettings;
   createdAt: string;
   updatedAt: string;
 }
 
-// Branch in list (getMyRooms response) - includes isCR from membership
-export interface RoomListItem {
+// Branch in list (getMyBranches response) - includes isCR from membership
+export interface BranchListItem {
   _id: string;
   name: string;
   description?: string;
   coverImage: string;
-  roomType: RoomType;
+  branchType: BranchType;
   creator: User;
   membersCount: number;
   postsCount: number;
@@ -49,8 +49,8 @@ export interface RoomListItem {
   createdAt: string;
 }
 
-// Branch Meta (from getRoomDetails)
-export interface RoomMeta {
+// Branch Meta (from getBranchDetails)
+export interface BranchMeta {
   isMember: boolean;
   isTeacher: boolean;
   isCreator: boolean;
@@ -61,27 +61,27 @@ export interface RoomMeta {
 }
 
 // API Response Types
-export interface RoomDetailsResponse {
+export interface BranchDetailsResponse {
   statusCode: number;
   success: boolean;
   message: string;
   data: {
     Branch: Branch;
-    meta: RoomMeta;
+    meta: BranchMeta;
   };
 }
 
-export interface MyRoomsResponse {
+export interface MyBranchesResponse {
   statusCode: number;
   success: boolean;
   message: string;
   data: {
-    rooms: RoomListItem[];
+    branches: BranchListItem[];
     pagination: Pagination;
   };
 }
 
-export interface CreateRoomResponse {
+export interface CreateBranchResponse {
   statusCode: number;
   success: boolean;
   message: string;
@@ -95,12 +95,12 @@ export interface CreateRoomResponse {
   };
 }
 
-export interface JoinRoomResponse {
+export interface JoinBranchResponse {
   statusCode: number;
   success: boolean;
   message: string;
   data: {
-    roomId: string;
-    roomName: string;
+    branchId: string;
+    branchName: string;
   };
 }

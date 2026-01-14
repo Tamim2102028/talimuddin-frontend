@@ -1,9 +1,9 @@
 import React from "react";
-import RoomCard from "../RoomCard";
+import BranchCard from "../BranchCard";
 import { branchHooks } from "../../../hooks/useBranch";
-import type { RoomListItem } from "../../../types";
+import type { BranchListItem } from "../../../types";
 
-const ArchivedRooms: React.FC = () => {
+const ArchivedBranches: React.FC = () => {
   const {
     data,
     fetchNextPage,
@@ -11,16 +11,16 @@ const ArchivedRooms: React.FC = () => {
     isFetchingNextPage,
     isLoading,
     isError,
-  } = branchHooks.useArchivedRooms();
+  } = branchHooks.useArchivedBranches();
 
-  const rooms: RoomListItem[] =
-    data?.pages.flatMap((page) => page.data.rooms) || [];
+  const branches: BranchListItem[] =
+    data?.pages.flatMap((page) => page.data.branches) || [];
   const totalDocs = data?.pages[0]?.data.pagination.totalDocs || 0;
 
   if (isLoading) {
     return (
       <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
-        <p className="text-sm text-gray-600">Loading archived rooms...</p>
+        <p className="text-sm text-gray-600">Loading archived branches...</p>
       </div>
     );
   }
@@ -28,7 +28,7 @@ const ArchivedRooms: React.FC = () => {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-300 bg-red-50 p-6 shadow">
-        <p className="text-sm text-red-600">Failed to load archived rooms</p>
+        <p className="text-sm text-red-600">Failed to load archived branches</p>
       </div>
     );
   }
@@ -38,25 +38,25 @@ const ArchivedRooms: React.FC = () => {
       {/* header */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-900">
-          Archived Rooms {totalDocs ? `(${totalDocs})` : ""}
+          Archived Branches {totalDocs ? `(${totalDocs})` : ""}
         </h2>
       </div>
 
-      {/* no rooms message */}
-      {rooms.length === 0 && (
+      {/* no branches message */}
+      {branches.length === 0 && (
         <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
           <p className="text-center text-sm font-medium text-gray-600">
-            No archived rooms found
+            No archived branches found
           </p>
         </div>
       )}
 
-      {/* rooms */}
-      {rooms.length > 0 && (
+      {/* branches */}
+      {branches.length > 0 && (
         <>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {rooms.map((r) => (
-              <RoomCard key={r._id} Branch={r} />
+            {branches.map((r) => (
+              <BranchCard key={r._id} Branch={r} />
             ))}
           </div>
 
@@ -90,13 +90,13 @@ const ArchivedRooms: React.FC = () => {
       {/* info message */}
       <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 shadow-sm">
         <p className="text-sm font-medium text-blue-800">
-          <strong>Note:</strong> Archived rooms are read-only. No one can join
-          or post in these rooms until they are unarchived by the creator or
-          admin.
+          <strong>Note:</strong> Archived branches are read-only. No one can
+          join or post in these branches until they are unarchived by the
+          creator or admin.
         </p>
       </div>
     </div>
   );
 };
 
-export default ArchivedRooms;
+export default ArchivedBranches;

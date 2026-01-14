@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-interface RoomMemberItem {
+interface BranchMemberItem {
   user: {
     _id: string;
     fullName: string;
@@ -18,12 +18,12 @@ interface RoomMemberItem {
   };
 }
 
-interface RoomMemberCardProps {
-  member: RoomMemberItem;
+interface BranchMemberCardProps {
+  member: BranchMemberItem;
   currentUserRole: string | null;
 }
 
-const RoomMemberCard: React.FC<RoomMemberCardProps> = ({ member }) => {
+const BranchMemberCard: React.FC<BranchMemberCardProps> = ({ member }) => {
   const { user, meta } = member;
 
   // Role badge
@@ -83,4 +83,4 @@ const RoomMemberCard: React.FC<RoomMemberCardProps> = ({ member }) => {
   );
 };
 
-export default RoomMemberCard;
+export default BranchMemberCard;

@@ -3,26 +3,26 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaCamera, FaImage } from "react-icons/fa";
 import { branchHooks } from "../../../hooks/useBranch";
 
-interface RoomPhotosTabProps {
+interface BranchPhotosTabProps {
   coverImage: string;
 }
 
-const RoomPhotosTab: React.FC<RoomPhotosTabProps> = ({ coverImage }) => {
-  const { roomId } = useParams();
+const BranchPhotosTab: React.FC<BranchPhotosTabProps> = ({ coverImage }) => {
+  const { branchId } = useParams();
   const navigate = useNavigate();
   const coverInputRef = useRef<HTMLInputElement>(null);
 
   const { mutate: updateCover, isPending: isUpdatingCover } =
-    branchHooks.useUpdateRoomCoverImage();
+    branchHooks.useUpdateBranchCoverImage();
 
   const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && roomId) {
+    if (file && branchId) {
       updateCover(
-        { roomId, coverImage: file },
+        { branchId, coverImage: file },
         {
           onSuccess: () => {
-            navigate(`/ClassBranch/branches/${roomId}`);
+            navigate(`/ClassBranch/branches/${branchId}`);
           },
         }
       );
@@ -81,4 +81,4 @@ const RoomPhotosTab: React.FC<RoomPhotosTabProps> = ({ coverImage }) => {
   );
 };
 
-export default RoomPhotosTab;
+export default BranchPhotosTab;

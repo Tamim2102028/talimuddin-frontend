@@ -3,8 +3,8 @@ import { branchHooks } from "../../../hooks/useBranch";
 import PostSkeleton from "../../shared/skeletons/PostSkeleton";
 import type { ApiError } from "../../../types";
 import type { AxiosError } from "axios";
-import RoomPostCard from "../RoomPostCard";
-import CreateRoomPost from "../CreateRoomPost";
+import BranchPostCard from "../BranchPostCard";
+import CreateBranchPost from "../CreateBranchPost";
 
 const branchPosts: React.FC = () => {
   const {
@@ -45,13 +45,13 @@ const branchPosts: React.FC = () => {
   return (
     <>
       {/* Create Post Card */}
-      <CreateRoomPost />
+      <CreateBranchPost />
 
       {/* Posts List */}
       {posts.length > 0 ? (
         <div className="space-y-3">
           {posts.map((item) => (
-            <RoomPostCard
+            <BranchPostCard
               key={item.post._id}
               post={item.post}
               meta={item.meta}

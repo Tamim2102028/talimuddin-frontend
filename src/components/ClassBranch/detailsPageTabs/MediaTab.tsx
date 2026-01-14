@@ -5,9 +5,9 @@ import { BsThreeDots } from "react-icons/bs";
 import { showMediaMenu } from "../../../utils/customModals";
 
 // TODO: Replace with API types
-type RoomFile = {
+type BranchFile = {
   id: string;
-  roomId: string;
+  branchId: string;
   fileName: string;
   fileUrl?: string;
   uploadedBy: string;
@@ -18,15 +18,15 @@ type RoomFile = {
 };
 
 interface Props {
-  roomId: string;
+  branchId: string;
   creatorId?: string;
   admins?: string[];
   currentUserId?: string;
-  files?: RoomFile[];
+  files?: BranchFile[];
 }
 
 const MediaTab: React.FC<Props> = ({
-  roomId,
+  branchId,
   creatorId,
   admins,
   currentUserId,
@@ -38,7 +38,7 @@ const MediaTab: React.FC<Props> = ({
 
   // keep a local copy so we can rename/delete locally in the demo
   const [localFiles, setLocalFiles] = useState(() =>
-    files.filter((f) => f.roomId === roomId)
+    files.filter((f) => f.branchId === branchId)
   );
 
   const filtered = localFiles.filter((f) =>
@@ -55,7 +55,7 @@ const MediaTab: React.FC<Props> = ({
     assignments: localFiles.filter((f) => f.isAssignment).length,
   };
 
-  const handleFileMenu = async (file: (typeof roomFiles)[number]) => {
+  const handleFileMenu = async (file: (typeof branchFiles)[number]) => {
     await showMediaMenu(file.fileName, {
       onRename: (newName) => {
         setLocalFiles((s) =>
@@ -77,9 +77,9 @@ const MediaTab: React.FC<Props> = ({
     const file = e.target.files?.[0];
     if (!file) return;
     const url = URL.createObjectURL(file);
-    const newFile: RoomFile = {
-      id: `f-${roomId}-${Date.now()}`,
-      roomId,
+    const newFile: BranchFile = {
+      id: `f-${branchId}-${Date.now()}`,
+      branchId,
       fileName: file.name,
       fileUrl: url,
       uploadedBy: currentUserId ?? "1",

@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaCamera, FaCog, FaArrowLeft, FaInfoCircle } from "react-icons/fa";
 import PageLoader from "../Fallbacks/PageLoader";
 import { branchHooks } from "../../hooks/useBranch";
-import RoomPhotosTab from "../../components/ClassBranch/Edit/RoomPhotosTab";
-import RoomGeneralTab from "../../components/ClassBranch/Edit/RoomGeneralTab";
-import RoomSettingsTab from "../../components/ClassBranch/Edit/branchesettingsTab";
+import BranchPhotosTab from "../../components/ClassBranch/Edit/BranchPhotosTab";
+import BranchGeneralTab from "../../components/ClassBranch/Edit/BranchGeneralTab";
+import BranchSettingsTab from "../../components/ClassBranch/Edit/branchesettingsTab";
 
 type TabType = "photos" | "general" | "settings";
 
@@ -21,40 +21,47 @@ const TABS: Tab[] = [
   { id: "settings", label: "Branch Settings", icon: <FaCog /> },
 ];
 
-const EditRoomPage: React.FC = () => {
+const EditBranchPage: React.FC = () => {
   const navigate = useNavigate();
-  const { roomId } = useParams();
-  const { data: roomData, isLoading, error } = branchHooks.useBranchDetails(roomId);
+  const { branchId } = useParams();
+  const {
+    data: branchData,
+    isLoading,
+    error,
+  } = branchHooks.useBranchDetails(branchId);
   const [activeTab, setActiveTab] = useState<TabType>("photos");
 
   if (isLoading) return <PageLoader />;
-  if (error || !roomData) {
+  if (error || !branchData) {
     return (
       <div className="animate-in fade-in zoom-in-95 flex h-[80vh] flex-col items-center justify-center gap-6 duration-500">
         <div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-50 text-red-500">
           <FaInfoCircle className="text-4xl" />
         </div>
         <div className="text-center">
-          <h1 className="text-3xl font-black text-gray-900">Branch Not Found</h1>
+          <h1 className="text-3xl font-black text-gray-900">
+            Branch Not Found
+          </h1>
           <p className="mt-2 font-medium text-gray-500">
-            The Branch you're trying to manage doesn't exist or has been removed.
+            The Branch you're trying to manage doesn't exist or has been
+            removed.
           </p>
         </div>
         <button
           onClick={() => navigate("/ClassBranch")}
           className="mt-4 rounded-xl bg-gray-900 px-8 py-3 font-bold text-white shadow-lg shadow-gray-200 transition-all hover:bg-gray-800 active:scale-95"
         >
-          Back to Rooms
+          Back to Branches
         </button>
       </div>
     );
   }
 
-  const { Branch, meta } = roomData.data;
+  const { Branch, meta } = branchData.data;
 
   // Security: Only creator and admin can access
   if (!meta.isCreator && !meta.isAdmin) {
-    navigate(`/ClassBranch/branches/${roomId}`);
+    navigate(`/ClassBranch/branches/${branchId}`);
     return null;
   }
 
@@ -67,7 +74,7 @@ const EditRoomPage: React.FC = () => {
           <div className="flex items-center justify-between border-b border-gray-100 py-5">
             <div className="flex items-center gap-4">
               <button
-                onClick={() => navigate(`/ClassBranch/branches/${roomId}`)}
+                onClick={() => navigate(`/ClassBranch/branches/${branchId}`)}
                 className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-900 active:scale-95"
                 aria-label="Go back"
               >
@@ -108,14 +115,14 @@ const EditRoomPage: React.FC = () => {
       <div className="mx-auto max-w-4xl px-4 pt-10">
         <div className="flex flex-col gap-8">
           {activeTab === "photos" && (
-            <RoomPhotosTab coverImage={Branch.coverImage} />
+            <BranchPhotosTab coverImage={Branch.coverImage} />
           )}
-          {activeTab === "general" && <RoomGeneralTab Branch={Branch} />}
-          {activeTab === "settings" && <RoomSettingsTab Branch={Branch} />}
+          {activeTab === "general" && <BranchGeneralTab Branch={Branch} />}
+          {activeTab === "settings" && <BranchSettingsTab Branch={Branch} />}
         </div>
       </div>
     </div>
   );
 };
 
-export default EditRoomPage;
+export default EditBranchPage;

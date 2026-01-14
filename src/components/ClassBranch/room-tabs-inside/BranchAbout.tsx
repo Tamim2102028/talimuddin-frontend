@@ -9,11 +9,11 @@ import {
 } from "react-icons/fa";
 import type { Branch } from "../../../types/Branch.types";
 
-interface RoomAboutProps {
+interface BranchAboutProps {
   Branch: Branch;
 }
 
-const RoomAbout: React.FC<RoomAboutProps> = ({ Branch }) => {
+const BranchAbout: React.FC<BranchAboutProps> = ({ Branch }) => {
   const formatDate = (dateString: string | Date) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -23,7 +23,7 @@ const RoomAbout: React.FC<RoomAboutProps> = ({ Branch }) => {
     });
   };
 
-  const getRoomTypeLabel = (type: string) => {
+  const getBranchTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
       UNIVERSITY: "University",
       COLLEGE: "College",
@@ -70,11 +70,12 @@ const RoomAbout: React.FC<RoomAboutProps> = ({ Branch }) => {
           </div>
           <div>
             <h3 className="font-semibold text-blue-600">
-              {getRoomTypeLabel(Branch.roomType)}
+              {getBranchTypeLabel(Branch.branchType)}
             </h3>
             <p className="mt-1 text-sm text-gray-600">
               This Branch is configured for{" "}
-              {getRoomTypeLabel(Branch.roomType).toLowerCase()} level learning
+              {getBranchTypeLabel(Branch.branchType).toLowerCase()} level
+              learning
             </p>
           </div>
         </div>
@@ -116,7 +117,9 @@ const RoomAbout: React.FC<RoomAboutProps> = ({ Branch }) => {
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="mb-4 flex items-center gap-2">
           <FaInfoCircle className="h-5 w-5 text-gray-600" />
-          <h2 className="text-lg font-semibold text-gray-900">Branch Settings</h2>
+          <h2 className="text-lg font-semibold text-gray-900">
+            Branch Settings
+          </h2>
         </div>
         <div className="space-y-3">
           <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
@@ -182,4 +185,4 @@ const RoomAbout: React.FC<RoomAboutProps> = ({ Branch }) => {
   );
 };
 
-export default RoomAbout;
+export default BranchAbout;

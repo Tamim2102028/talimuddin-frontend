@@ -5,7 +5,7 @@ type Importer = () => Promise<unknown>;
 
 const pathToImporter: Record<string, Importer> = {
   "/": () => import("../pages/Home"),
-  "/classroom": () => import("../pages/ClassRoom"),
+  "/classbranch": () => import("../pages/ClassBranch"),
   "/notifications": () => import("../pages/Notifications"),
   "/saved": () => import("../pages/Saved"),
   "/profile": () => import("../pages/Profile/Profile"),

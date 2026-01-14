@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import type { RoomListItem } from "../../types";
+import type { BranchListItem } from "../../types";
 
 type Props = {
-  Branch: RoomListItem;
+  Branch: BranchListItem;
 };
 
-const RoomCard: React.FC<Props> = ({ Branch }) => {
+const BranchCard: React.FC<Props> = ({ Branch }) => {
   return (
     <div className="overflow-hidden rounded-lg shadow-sm">
       <Link
@@ -20,7 +20,9 @@ const RoomCard: React.FC<Props> = ({ Branch }) => {
         />
 
         <div className="absolute top-0 left-0 w-full bg-black/85 p-2">
-          <p className="truncate text-sm font-medium text-white">{Branch.name}</p>
+          <p className="truncate text-sm font-medium text-white">
+            {Branch.name}
+          </p>
           {Branch.creator && (
             <p className="mt-0.5 truncate text-xs text-gray-200">
               <Link
@@ -45,4 +47,4 @@ const RoomCard: React.FC<Props> = ({ Branch }) => {
   );
 };
 
-export default RoomCard;
+export default BranchCard;

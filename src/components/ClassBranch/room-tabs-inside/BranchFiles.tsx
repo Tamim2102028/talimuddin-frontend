@@ -1,6 +1,6 @@
 import React from "react";
 
-const RoomFiles: React.FC = () => {
+const BranchFiles: React.FC = () => {
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-8 text-center shadow-sm">
       <h3 className="text-xl font-semibold text-gray-900">
@@ -13,4 +13,4 @@ const RoomFiles: React.FC = () => {
   );
 };
 
-export default RoomFiles;
+export default BranchFiles;

@@ -11,16 +11,16 @@ type UserData = {
   avatar?: string;
 };
 
-type RoomMember = {
+type BranchMember = {
   userId: string;
-  roomId: string;
+  branchId: string;
   role: "creator" | "admin" | "member";
 };
 
 interface Props {
-  roomId: string;
+  branchId: string;
   users: UserData[];
-  members: RoomMember[];
+  members: BranchMember[];
   currentUserId?: string;
   // admin and member management callbacks (optional)
   onRemoveMember?: (id: string) => void;
@@ -29,7 +29,7 @@ interface Props {
 }
 
 const MembersTab: React.FC<Props> = ({
-  roomId,
+  branchId,
   users,
   members,
   currentUserId,
@@ -40,7 +40,7 @@ const MembersTab: React.FC<Props> = ({
   const currentUser = users.find((u) => u.id === currentUserId);
 
   // Filter Branch members
-  const branchMembers = members.filter((m) => m.roomId === roomId);
+  const branchMembers = members.filter((m) => m.branchId === branchId);
 
   // Extract creator and admins from Branch members
   const creator = branchMembers.find((m) => m.role === "creator");

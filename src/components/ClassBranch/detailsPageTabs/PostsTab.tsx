@@ -6,9 +6,9 @@ import SeparatorDot from "../../shared/SeparatorDot";
 import { showPostMenu } from "../../../utils/customModals";
 
 // TODO: Replace with API types
-type RoomPost = {
+type BranchPost = {
   id: string;
-  roomId: string;
+  branchId: string;
   authorId: string;
   content: string;
   createdAt: string;
@@ -29,8 +29,8 @@ type UserData = {
 };
 
 interface Props {
-  roomId: string;
-  posts: RoomPost[];
+  branchId: string;
+  posts: BranchPost[];
   users: UserData[];
   showReplyFor: Record<string, boolean>;
   replyText: Record<string, string>;
@@ -50,7 +50,7 @@ interface Props {
 }
 
 const PostsTab: React.FC<Props> = ({
-  roomId,
+  branchId,
   posts,
   users,
   showReplyFor,
@@ -86,7 +86,7 @@ const PostsTab: React.FC<Props> = ({
   const toggleExpand = (postId: string) =>
     setExpandedPosts((s) => ({ ...s, [postId]: !s[postId] }));
 
-  const handlePostMenu = async (post: RoomPost) => {
+  const handlePostMenu = async (post: BranchPost) => {
     const isCreator = !!currentUserId && currentUserId === creatorId;
     const isAdmin = !!currentUserId && !!admins?.includes(currentUserId);
     const isAuthor = !!currentUserId && currentUserId === post.authorId;
@@ -126,7 +126,7 @@ const PostsTab: React.FC<Props> = ({
   };
 
   const branchPosts = posts
-    .filter((p) => p.roomId === roomId)
+    .filter((p) => p.branchId === branchId)
     .sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

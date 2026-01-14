@@ -4,15 +4,15 @@ import { useForm } from "react-hook-form";
 import { FaSignInAlt } from "react-icons/fa";
 import { branchHooks } from "../../hooks/useBranch";
 
-type JoinRoomFormValues = {
+type JoinBranchFormValues = {
   joinCode: string;
 };
 
-const JoinRoomPage: React.FC = () => {
+const JoinBranchPage: React.FC = () => {
   const navigate = useNavigate();
-  const { mutate: joinRoom, isPending } = branchHooks.useJoinRoom();
+  const { mutate: joinBranch, isPending } = branchHooks.useJoinBranch();
 
-  const { register, handleSubmit, formState } = useForm<JoinRoomFormValues>({
+  const { register, handleSubmit, formState } = useForm<JoinBranchFormValues>({
     defaultValues: {
       joinCode: "",
     },
@@ -20,11 +20,11 @@ const JoinRoomPage: React.FC = () => {
 
   const { errors } = formState;
 
-  const onSubmit = (data: JoinRoomFormValues) => {
-    joinRoom(data.joinCode, {
+  const onSubmit = (data: JoinBranchFormValues) => {
+    joinBranch(data.joinCode, {
       onSuccess: (response) => {
-        const roomId = response.data.roomId;
-        navigate(`/ClassBranch/branches/${roomId}`);
+        const branchId = response.data.branchId;
+        navigate(`/ClassBranch/branches/${branchId}`);
       },
     });
   };
@@ -97,4 +97,4 @@ const JoinRoomPage: React.FC = () => {
   );
 };
 
-export default JoinRoomPage;
+export default JoinBranchPage;

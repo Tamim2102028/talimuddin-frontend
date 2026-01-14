@@ -2,15 +2,19 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { branchHooks } from "../../hooks/useBranch";
-import RoomHeader from "../../components/ClassBranch/details-page/RoomHeader";
+import BranchHeader from "../../components/ClassBranch/details-page/BranchHeader";
 import branchPosts from "../../components/ClassBranch/Branch-tabs-inside/branchPosts";
 import branchMembersTab from "../../components/ClassBranch/Branch-tabs-inside/branchMembersTab";
-import RoomAbout from "../../components/ClassBranch/Branch-tabs-inside/RoomAbout";
-import RoomFiles from "../../components/ClassBranch/Branch-tabs-inside/RoomFiles";
+import BranchAbout from "../../components/ClassBranch/Branch-tabs-inside/BranchAbout";
+import BranchFiles from "../../components/ClassBranch/Branch-tabs-inside/BranchFiles";
 
-const RoomDetails: React.FC = () => {
-  const { roomId } = useParams<{ roomId: string }>();
-  const { data: response, isLoading, error } = branchHooks.useBranchDetails(roomId);
+const BranchDetails: React.FC = () => {
+  const { branchId } = useParams<{ branchId: string }>();
+  const {
+    data: response,
+    isLoading,
+    error,
+  } = branchHooks.useBranchDetails(branchId);
 
   const Branch = response?.data?.Branch;
   const meta = response?.data?.meta;
@@ -34,7 +38,7 @@ const RoomDetails: React.FC = () => {
         </p>
         <div className="mt-4">
           <Link to="/ClassBranch" className="text-blue-600 hover:underline">
-            Back to Rooms
+            Back to Branches
           </Link>
         </div>
       </div>
@@ -43,15 +47,15 @@ const RoomDetails: React.FC = () => {
 
   return (
     <div className="space-y-5 overflow-hidden">
-      <RoomHeader Branch={Branch} meta={meta} />
+      <BranchHeader Branch={Branch} meta={meta} />
 
       <div className="mx-auto max-w-5xl">
         <div className="space-y-3 rounded-xl shadow">
           <Routes>
             <Route index element={<branchPosts />} />
             <Route path="members" element={<branchMembersTab />} />
-            <Route path="files" element={<RoomFiles />} />
-            <Route path="about" element={<RoomAbout Branch={Branch} />} />
+            <Route path="files" element={<BranchFiles />} />
+            <Route path="about" element={<BranchAbout Branch={Branch} />} />
           </Routes>
         </div>
       </div>
@@ -59,4 +63,4 @@ const RoomDetails: React.FC = () => {
   );
 };
 
-export default RoomDetails;
+export default BranchDetails;

@@ -4,31 +4,32 @@ import type { Branch } from "../../../types/Branch.types";
 import { branchHooks } from "../../../hooks/useBranch";
 import { ROOM_TYPES } from "../../../constants/Branch";
 
-interface RoomGeneralTabProps {
+interface BranchGeneralTabProps {
   Branch: Branch;
 }
 
-const RoomGeneralTab: React.FC<RoomGeneralTabProps> = ({ Branch }) => {
+const BranchGeneralTab: React.FC<BranchGeneralTabProps> = ({ Branch }) => {
   const navigate = useNavigate();
-  const { roomId } = useParams();
+  const { branchId } = useParams();
   const [formData, setFormData] = useState({
     name: Branch.name,
     description: Branch.description || "",
-    roomType: Branch.roomType,
+    branchType: Branch.branchType,
   });
 
-  const { mutate: updateDetails, isPending } = branchHooks.useUpdateRoomDetails();
+  const { mutate: updateDetails, isPending } =
+    branchHooks.useUpdateBranchDetails();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateDetails(
       {
-        roomId: roomId as string,
+        branchId: branchId as string,
         updateData: formData,
       },
       {
         onSuccess: () => {
-          navigate(`/ClassBranch/branches/${roomId}`);
+          navigate(`/ClassBranch/branches/${branchId}`);
         },
       }
     );
@@ -86,7 +87,7 @@ const RoomGeneralTab: React.FC<RoomGeneralTabProps> = ({ Branch }) => {
 
           <div>
             <label
-              htmlFor="roomType"
+              htmlFor="branchType"
               className="block text-sm font-semibold text-gray-700"
             >
               Branch Type
@@ -125,17 +126,17 @@ const RoomGeneralTab: React.FC<RoomGeneralTabProps> = ({ Branch }) => {
                   onClick={() =>
                     setFormData({
                       ...formData,
-                      roomType: option.id,
+                      branchType: option.id,
                     })
                   }
                   className={`flex flex-col items-start rounded-xl border-2 p-4 text-left transition-all ${
-                    formData.roomType === option.id
+                    formData.branchType === option.id
                       ? "border-blue-600 bg-blue-50"
                       : "border-gray-100 hover:border-blue-200 hover:bg-gray-50"
                   }`}
                 >
                   <span
-                    className={`text-sm font-bold ${formData.roomType === option.id ? "text-blue-700" : "text-gray-900"}`}
+                    className={`text-sm font-bold ${formData.branchType === option.id ? "text-blue-700" : "text-gray-900"}`}
                   >
                     {option.label}
                   </span>
@@ -155,7 +156,7 @@ const RoomGeneralTab: React.FC<RoomGeneralTabProps> = ({ Branch }) => {
               isPending ||
               (formData.name === Branch.name &&
                 formData.description === Branch.description &&
-                formData.roomType === Branch.roomType)
+                formData.branchType === Branch.branchType)
             }
             className="flex min-w-[140px] items-center justify-center rounded-lg bg-blue-600 px-6 py-3 font-bold text-white shadow-lg shadow-blue-200 transition-all hover:bg-blue-700 hover:shadow-blue-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
           >
@@ -174,4 +175,4 @@ const RoomGeneralTab: React.FC<RoomGeneralTabProps> = ({ Branch }) => {
   );
 };
 
-export default RoomGeneralTab;
+export default BranchGeneralTab;

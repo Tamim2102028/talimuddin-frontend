@@ -2,9 +2,9 @@ import { NavLink, useParams } from "react-router-dom";
 import { FaUsers, FaFolder, FaInfoCircle } from "react-icons/fa";
 import { BsPostcard } from "react-icons/bs";
 
-const RoomDetailsNavBar = () => {
-  const { roomId } = useParams<{ roomId: string }>();
-  const baseUrl = `/ClassBranch/branches/${roomId}`;
+const BranchDetailsNavBar = () => {
+  const { branchId } = useParams<{ branchId: string }>();
+  const baseUrl = `/ClassBranch/branches/${branchId}`;
 
   const tabs = [
     { path: baseUrl, label: "Posts", icon: BsPostcard, end: true },
@@ -38,4 +38,4 @@ const RoomDetailsNavBar = () => {
   );
 };
 
-export default RoomDetailsNavBar;
+export default BranchDetailsNavBar;

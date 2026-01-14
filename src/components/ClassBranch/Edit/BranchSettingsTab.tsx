@@ -3,24 +3,25 @@ import { useParams } from "react-router-dom";
 import type { Branch } from "../../../types/Branch.types";
 import { branchHooks } from "../../../hooks/useBranch";
 
-interface RoomSettingsTabProps {
+interface BranchSettingsTabProps {
   Branch: Branch;
 }
 
-const RoomSettingsTab: React.FC<RoomSettingsTabProps> = ({ Branch }) => {
-  const { roomId } = useParams();
+const BranchSettingsTab: React.FC<BranchSettingsTabProps> = ({ Branch }) => {
+  const { branchId } = useParams();
   const [settings, setSettings] = useState({
     allowStudentPosting: Branch.settings?.allowStudentPosting ?? true,
     allowComments: Branch.settings?.allowComments ?? true,
   });
 
-  const { mutate: updateDetails, isPending } = branchHooks.useUpdateRoomDetails();
+  const { mutate: updateDetails, isPending } =
+    branchHooks.useUpdateBranchDetails();
 
   const handleToggle = (key: keyof typeof settings) => {
     const newSettings = { ...settings, [key]: !settings[key] };
     setSettings(newSettings);
     updateDetails({
-      roomId: roomId as string,
+      branchId: branchId as string,
       updateData: { settings: newSettings },
     });
   };
@@ -106,4 +107,4 @@ const RoomSettingsTab: React.FC<RoomSettingsTabProps> = ({ Branch }) => {
   );
 };
 
-export default RoomSettingsTab;
+export default BranchSettingsTab;
