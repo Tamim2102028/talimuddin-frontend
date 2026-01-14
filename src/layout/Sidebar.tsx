@@ -25,6 +25,18 @@ const Sidebar: React.FC = () => {
       label: "ClassRoom",
       path: "/classroom",
       active: location.pathname.startsWith("/classroom"),
+      subItems: [
+        {
+          label: "All Rooms",
+          path: "/classroom",
+          active: location.pathname === "/classroom",
+        },
+        {
+          label: "My Rooms",
+          path: "/classroom/my",
+          active: location.pathname === "/classroom/my",
+        },
+      ],
     },
     {
       icon: FaBell,
@@ -71,34 +83,54 @@ const Sidebar: React.FC = () => {
       <div className="hide-scrollbar flex-1 overflow-y-auto">
         <nav className="space-y-1">
           {navigationItems.map((item, index) => (
-            <NavLink
-              key={index}
-              to={item.path}
-              onMouseEnter={() => prefetchRoute(item.path)}
-              className={`flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-all duration-200 ${
-                item.active
-                  ? "bg-green-50 text-green-600"
-                  : "text-gray-700 hover:bg-green-100 hover:text-gray-900"
-              }`}
-            >
-              <div className="flex items-center">
-                <item.icon
-                  className={`mr-3 h-5 w-5 transition-colors ${
-                    item.active
-                      ? "text-green-600"
-                      : "text-gray-500 group-hover:text-gray-900"
-                  }`}
-                />
-                <span>{item.label}</span>
-              </div>
-              {item.badge && (
-                <span
-                  className={`rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white`}
-                >
-                  {item.badge}
-                </span>
+            <div key={index}>
+              <NavLink
+                to={item.path}
+                onMouseEnter={() => prefetchRoute(item.path)}
+                className={`flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-all duration-200 ${
+                  item.active
+                    ? "bg-green-50 text-green-600"
+                    : "text-gray-700 hover:bg-green-100 hover:text-gray-900"
+                }`}
+              >
+                <div className="flex items-center">
+                  <item.icon
+                    className={`mr-3 h-5 w-5 transition-colors ${
+                      item.active
+                        ? "text-green-600"
+                        : "text-gray-500 group-hover:text-gray-900"
+                    }`}
+                  />
+                  <span>{item.label}</span>
+                </div>
+                {item.badge && (
+                  <span
+                    className={`rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white`}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </NavLink>
+
+              {/* Sub-items */}
+              {item.subItems && item.active && (
+                <div className="mt-1 ml-8 space-y-1">
+                  {item.subItems.map((subItem, subIndex) => (
+                    <NavLink
+                      key={subIndex}
+                      to={subItem.path}
+                      className={`block rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                        subItem.active
+                          ? "bg-green-100 text-green-700"
+                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      }`}
+                    >
+                      {subItem.label}
+                    </NavLink>
+                  ))}
+                </div>
               )}
-            </NavLink>
+            </div>
           ))}
         </nav>
       </div>

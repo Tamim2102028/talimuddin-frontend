@@ -14,13 +14,24 @@ const ClassRoom: React.FC = () => {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        {/* Main Classroom - Shows My Rooms directly */}
+        {/* All Rooms - Default */}
         <Route
           index
           element={
             <>
               <Header />
-              <Rooms />
+              <Rooms type="all" />
+            </>
+          }
+        />
+
+        {/* My Rooms */}
+        <Route
+          path="my"
+          element={
+            <>
+              <Header />
+              <Rooms type="my" />
             </>
           }
         />

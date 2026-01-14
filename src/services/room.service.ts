@@ -20,28 +20,19 @@ export const roomService = {
     return response.data;
   },
 
+  // Get All Rooms
+  getAllRooms: async (page = 1): Promise<MyRoomsResponse> => {
+    const limit = ROOM_LIMIT;
+    const response = await api.get<MyRoomsResponse>("/rooms/all", {
+      params: { page, limit },
+    });
+    return response.data;
+  },
+
   // Get My Rooms
   getMyRooms: async (page = 1): Promise<MyRoomsResponse> => {
     const limit = ROOM_LIMIT;
-    const response = await api.get<MyRoomsResponse>("/rooms/myRooms", {
-      params: { page, limit },
-    });
-    return response.data;
-  },
-
-  // Get Hidden Rooms
-  getHiddenRooms: async (page = 1): Promise<MyRoomsResponse> => {
-    const limit = ROOM_LIMIT;
-    const response = await api.get<MyRoomsResponse>("/rooms/hiddenRooms", {
-      params: { page, limit },
-    });
-    return response.data;
-  },
-
-  // Get Archived Rooms
-  getArchivedRooms: async (page = 1): Promise<MyRoomsResponse> => {
-    const limit = ROOM_LIMIT;
-    const response = await api.get<MyRoomsResponse>("/rooms/archivedRooms", {
+    const response = await api.get<MyRoomsResponse>("/rooms/my", {
       params: { page, limit },
     });
     return response.data;
@@ -61,21 +52,39 @@ export const roomService = {
     return response.data;
   },
 
-  // Toggle Archive Room (Creator only)
-  toggleArchiveRoom: async (roomId: string) => {
-    const response = await api.patch(`/rooms/${roomId}/archive`);
+  // Leave Room
+  leaveRoom: async (roomId: string) => {
+    const response = await api.post(`/rooms/${roomId}/leave`);
     return response.data;
   },
 
-  // Delete Room (Creator only)
+  // Delete Room (Owner only)
   deleteRoom: async (roomId: string) => {
     const response = await api.delete(`/rooms/${roomId}`);
     return response.data;
   },
 
-  // Hide Room (Member only)
-  hideRoom: async (roomId: string) => {
-    const response = await api.patch(`/rooms/${roomId}/hide`);
+  // Get Pending Join Requests (Owner, Admin, Teacher members)
+  getPendingJoinRequests: async (roomId: string, page = 1) => {
+    const response = await api.get(`/rooms/${roomId}/requests/pending`, {
+      params: { page, limit: 20 },
+    });
+    return response.data;
+  },
+
+  // Accept Join Request
+  acceptJoinRequest: async (roomId: string, requestId: string) => {
+    const response = await api.post(
+      `/rooms/${roomId}/requests/${requestId}/accept`
+    );
+    return response.data;
+  },
+
+  // Reject Join Request
+  rejectJoinRequest: async (roomId: string, requestId: string) => {
+    const response = await api.post(
+      `/rooms/${roomId}/requests/${requestId}/reject`
+    );
     return response.data;
   },
 

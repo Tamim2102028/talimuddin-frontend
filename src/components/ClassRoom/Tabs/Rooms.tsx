@@ -5,7 +5,11 @@ import { authHooks } from "../../../hooks/useAuth";
 import { USER_TYPES } from "../../../constants/user";
 import type { RoomListItem } from "../../../types";
 
-const Rooms: React.FC = () => {
+interface RoomsProps {
+  type: "all" | "my";
+}
+
+const Rooms: React.FC<RoomsProps> = ({ type }) => {
   const {
     data,
     fetchNextPage,
@@ -13,7 +17,8 @@ const Rooms: React.FC = () => {
     isFetchingNextPage,
     isLoading,
     isError,
-  } = roomHooks.useMyRooms();
+  } = type === "all" ? roomHooks.useAllRooms() : roomHooks.useMyRooms();
+
   const { user } = authHooks.useUser();
 
   const rooms: RoomListItem[] =
@@ -41,7 +46,8 @@ const Rooms: React.FC = () => {
       {/* header */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-900">
-          Rooms {totalDocs ? `(${totalDocs})` : ""}
+          {type === "all" ? "All Rooms" : "My Rooms"}{" "}
+          {totalDocs ? `(${totalDocs})` : ""}
         </h2>
       </div>
 
@@ -49,9 +55,11 @@ const Rooms: React.FC = () => {
       {rooms.length === 0 ? (
         <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
           <p className="text-center text-sm font-medium text-gray-600">
-            {user?.userType === USER_TYPES.TEACHER
-              ? "Create or join a room to get started."
-              : "Join a room to get started."}
+            {type === "all"
+              ? "No rooms available yet."
+              : user?.userType === USER_TYPES.TEACHER
+                ? "Create or join a room to get started."
+                : "Join a room to get started."}
           </p>
         </div>
       ) : (
