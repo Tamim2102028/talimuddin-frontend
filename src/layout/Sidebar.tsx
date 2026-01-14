@@ -29,22 +29,16 @@ const Sidebar: React.FC = () => {
       active: location.pathname === "/",
     },
     {
-      icon: FaTint,
-      label: "Blood Donation",
-      path: "/blood-donation",
-      active: location.pathname.startsWith("/blood-donation"),
+      icon: FaSchool,
+      label: "My Room",
+      path: "/classroom/my",
+      active: location.pathname === "/classroom/my",
     },
     {
       icon: FaSchool,
       label: "All Rooms",
       path: "/classroom",
       active: location.pathname === "/classroom",
-    },
-    {
-      icon: FaSchool,
-      label: "My Rooms",
-      path: "/classroom/my",
-      active: location.pathname === "/classroom/my",
     },
     {
       icon: FaBell,
@@ -58,6 +52,12 @@ const Sidebar: React.FC = () => {
       label: "Saved",
       path: "/saved",
       active: location.pathname.startsWith("/saved"),
+    },
+    {
+      icon: FaTint,
+      label: "Blood Donation",
+      path: "/blood-donation",
+      active: location.pathname.startsWith("/blood-donation"),
     },
     {
       icon: FaCog,
