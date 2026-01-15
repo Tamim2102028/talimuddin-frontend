@@ -12,7 +12,7 @@ const Saved: React.FC = () => {
 
   const handleView = (id: string) => {
     // TODO: Implement view item logic
-    console.log("Viewing saved item: ", id);
+    console.log("Viewing saved item:", id);
   };
 
   const handleRemove = (id: string) => {
