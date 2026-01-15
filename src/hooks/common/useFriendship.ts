@@ -20,8 +20,8 @@ const invalidateAllFriendshipQueries = (
   // Group members - all groups (marks stale, fetches only when active)
   queryClient.invalidateQueries({ queryKey: ["groupMembers"] });
 
-  // Room members - all rooms (marks stale, fetches only when active)
-  queryClient.invalidateQueries({ queryKey: ["roomMembers"] });
+  // Branch members - all branches (marks stale, fetches only when active)
+  queryClient.invalidateQueries({ queryKey: ["branchMembers"] });
 };
 
 // 1. Send Friend Request

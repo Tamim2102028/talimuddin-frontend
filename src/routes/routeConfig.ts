@@ -52,12 +52,12 @@ export const routes: RouteConfig[] = [
     meta: { description: "Your dashboard" },
   },
   {
-    path: "/classroom/*",
-    component: lazy(() => import("../pages/ClassRoom")),
+    path: "/classbranch/*",
+    component: lazy(() => import("../pages/ClassBranch")),
     requireAuth: true,
-    title: "ClassRoom",
+    title: "ClassBranch",
     category: "education",
-    meta: { description: "Branch rooms and classes" },
+    meta: { description: "Branch branches and classes" },
   },
 
   // Utility routes

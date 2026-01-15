@@ -30,6 +30,7 @@ const Sidebar: React.FC = () => {
     },
     {
       icon: FaSchool,
+<<<<<<< HEAD
       label: "My Room",
       path: "/classroom/my",
       active: location.pathname === "/classroom/my",
@@ -39,6 +40,23 @@ const Sidebar: React.FC = () => {
       label: "All Rooms",
       path: "/classroom",
       active: location.pathname === "/classroom",
+=======
+      label: "ClassBranch",
+      path: "/classbranch",
+      active: location.pathname.startsWith("/classbranch"),
+      subItems: [
+        {
+          label: "All Branches",
+          path: "/classbranch",
+          active: location.pathname === "/classbranch",
+        },
+        {
+          label: "My Branches",
+          path: "/classbranch/my",
+          active: location.pathname === "/classbranch/my",
+        },
+      ],
+>>>>>>> 0e43037dcfc5aa28b932fc17c03162fef517909f
     },
     {
       icon: FaBell,
