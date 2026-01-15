@@ -1,9 +1,9 @@
 import React from "react";
-import RoomCard from "../RoomCard";
-import { roomHooks } from "../../../hooks/useRoom";
-import type { RoomListItem } from "../../../types";
+import RoomCard from "./RoomCard";
+import { roomHooks } from "../../hooks/useRoom";
+import type { RoomListItem } from "../../types";
 
-const HiddenRooms: React.FC = () => {
+const AllRoomsList: React.FC = () => {
   const {
     data,
     fetchNextPage,
@@ -11,7 +11,7 @@ const HiddenRooms: React.FC = () => {
     isFetchingNextPage,
     isLoading,
     isError,
-  } = roomHooks.useHiddenRooms();
+  } = roomHooks.useAllRooms();
 
   const rooms: RoomListItem[] =
     data?.pages.flatMap((page) => page.data.rooms) || [];
@@ -20,7 +20,7 @@ const HiddenRooms: React.FC = () => {
   if (isLoading) {
     return (
       <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
-        <p className="text-sm text-gray-600">Loading hidden rooms...</p>
+        <p className="text-sm text-gray-600">Loading rooms...</p>
       </div>
     );
   }
@@ -28,7 +28,7 @@ const HiddenRooms: React.FC = () => {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-300 bg-red-50 p-6 shadow">
-        <p className="text-sm text-red-600">Failed to load hidden rooms</p>
+        <p className="text-sm text-red-600">Failed to load rooms</p>
       </div>
     );
   }
@@ -38,7 +38,7 @@ const HiddenRooms: React.FC = () => {
       {/* header */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-900">
-          Hidden Rooms {totalDocs ? `(${totalDocs})` : ""}
+          All Rooms {totalDocs ? `(${totalDocs})` : ""}
         </h2>
       </div>
 
@@ -46,7 +46,7 @@ const HiddenRooms: React.FC = () => {
       {rooms.length === 0 ? (
         <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
           <p className="text-center text-sm font-medium text-gray-600">
-            No hidden rooms. You can hide rooms from the room details page menu.
+            No rooms available yet.
           </p>
         </div>
       ) : (
@@ -87,4 +87,4 @@ const HiddenRooms: React.FC = () => {
   );
 };
 
-export default HiddenRooms;
+export default AllRoomsList;

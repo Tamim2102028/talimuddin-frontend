@@ -78,6 +78,10 @@ export interface MyRoomsResponse {
   data: {
     rooms: RoomListItem[];
     pagination: Pagination;
+    meta?: {
+      hasRoom: boolean;
+      roomId?: string;
+    };
   };
 }
 

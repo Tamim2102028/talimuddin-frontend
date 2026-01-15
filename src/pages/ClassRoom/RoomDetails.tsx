@@ -3,10 +3,9 @@ import { Routes, Route, Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { roomHooks } from "../../hooks/useRoom";
 import RoomHeader from "../../components/ClassRoom/details-page/RoomHeader";
-import RoomPosts from "../../components/ClassRoom/room-tabs-inside/RoomPosts";
-import RoomMembersTab from "../../components/ClassRoom/room-tabs-inside/RoomMembersTab";
-import RoomAbout from "../../components/ClassRoom/room-tabs-inside/RoomAbout";
-import RoomFiles from "../../components/ClassRoom/room-tabs-inside/RoomFiles";
+import PostsTab from "../../components/ClassRoom/detailsPageTabs/PostsTab";
+import MembersTab from "../../components/ClassRoom/detailsPageTabs/MembersTab";
+import AboutTab from "../../components/ClassRoom/detailsPageTabs/AboutTab";
 
 const RoomDetails: React.FC = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -48,10 +47,9 @@ const RoomDetails: React.FC = () => {
       <div className="mx-auto max-w-5xl">
         <div className="space-y-3 rounded-xl shadow">
           <Routes>
-            <Route index element={<RoomPosts />} />
-            <Route path="members" element={<RoomMembersTab />} />
-            <Route path="files" element={<RoomFiles />} />
-            <Route path="about" element={<RoomAbout room={room} />} />
+            <Route index element={<PostsTab />} />
+            <Route path="members" element={<MembersTab />} />
+            <Route path="about" element={<AboutTab room={room} />} />
           </Routes>
         </div>
       </div>

@@ -1,10 +1,10 @@
 import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
-import Header from "../components/ClassRoom/Header";
-import Rooms from "../components/ClassRoom/Tabs/Rooms";
 import PageLoader from "./Fallbacks/PageLoader";
 
 // Lazy load pages
+const AllRoomsPage = lazy(() => import("./ClassRoom/AllRoomsPage"));
+const MyRoomsPage = lazy(() => import("./ClassRoom/MyRoomsPage"));
 const RoomDetails = lazy(() => import("./ClassRoom/RoomDetails"));
 const CreateRoomPage = lazy(() => import("./ClassRoom/CreateRoomPage"));
 const JoinRoomPage = lazy(() => import("./ClassRoom/JoinRoomPage"));
@@ -15,26 +15,10 @@ const ClassRoom: React.FC = () => {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         {/* All Rooms - Default */}
-        <Route
-          index
-          element={
-            <>
-              <Header />
-              <Rooms type="all" />
-            </>
-          }
-        />
+        <Route index element={<AllRoomsPage />} />
 
         {/* My Rooms */}
-        <Route
-          path="my"
-          element={
-            <>
-              <Header />
-              <Rooms type="my" />
-            </>
-          }
-        />
+        <Route path="my" element={<MyRoomsPage />} />
 
         {/* Standalone Routes (No Header) */}
         <Route path="createroom" element={<CreateRoomPage />} />

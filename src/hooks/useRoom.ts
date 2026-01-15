@@ -52,7 +52,7 @@ const useAllRooms = () => {
   });
 };
 
-const useMyRooms = () => {
+const useMyRoom = () => {
   return useInfiniteQuery({
     queryKey: ["myRooms", "infinite"],
     queryFn: ({ pageParam }) => roomService.getMyRooms(pageParam as number),
@@ -286,7 +286,7 @@ const useDeleteRoomComment = ({ postId }: { postId: string }) => {
 const roomHooks = {
   useCreateRoom,
   useAllRooms,
-  useMyRooms,
+  useMyRoom,
   useRoomDetails,
   useJoinRoom,
   useLeaveRoom,

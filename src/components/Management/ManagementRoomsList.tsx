@@ -1,15 +1,9 @@
 import React from "react";
-import RoomCard from "../RoomCard";
-import { roomHooks } from "../../../hooks/useRoom";
-import { authHooks } from "../../../hooks/useAuth";
-import { USER_TYPES } from "../../../constants/user";
-import type { RoomListItem } from "../../../types";
+import RoomCard from "../ClassRoom/RoomCard";
+import { roomHooks } from "../../hooks/useRoom";
+import type { RoomListItem } from "../../types";
 
-interface RoomsProps {
-  type: "all" | "my";
-}
-
-const Rooms: React.FC<RoomsProps> = ({ type }) => {
+const ManagementRoomsList: React.FC = () => {
   const {
     data,
     fetchNextPage,
@@ -17,9 +11,7 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
     isFetchingNextPage,
     isLoading,
     isError,
-  } = type === "all" ? roomHooks.useAllRooms() : roomHooks.useMyRooms();
-
-  const { user } = authHooks.useUser();
+  } = roomHooks.useAllRooms();
 
   const rooms: RoomListItem[] =
     data?.pages.flatMap((page) => page.data.rooms) || [];
@@ -46,8 +38,7 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
       {/* header */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-900">
-          {type === "all" ? "All Rooms" : "My Rooms"}{" "}
-          {totalDocs ? `(${totalDocs})` : ""}
+          All Rooms {totalDocs ? `(${totalDocs})` : ""}
         </h2>
       </div>
 
@@ -55,11 +46,7 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
       {rooms.length === 0 ? (
         <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
           <p className="text-center text-sm font-medium text-gray-600">
-            {type === "all"
-              ? "No rooms available yet."
-              : user?.userType === USER_TYPES.TEACHER
-                ? "Create or join a room to get started."
-                : "Join a room to get started."}
+            No rooms available yet.
           </p>
         </div>
       ) : (
@@ -100,4 +87,4 @@ const Rooms: React.FC<RoomsProps> = ({ type }) => {
   );
 };
 
-export default Rooms;
+export default ManagementRoomsList;

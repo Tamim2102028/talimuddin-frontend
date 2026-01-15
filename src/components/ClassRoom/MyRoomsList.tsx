@@ -1,9 +1,11 @@
 import React from "react";
-import RoomCard from "../RoomCard";
-import { roomHooks } from "../../../hooks/useRoom";
-import type { RoomListItem } from "../../../types";
+import RoomCard from "./RoomCard";
+import { roomHooks } from "../../hooks/useRoom";
+import { authHooks } from "../../hooks/useAuth";
+import { USER_TYPES } from "../../constants/user";
+import type { RoomListItem } from "../../types";
 
-const ArchivedRooms: React.FC = () => {
+const MyRoomsList: React.FC = () => {
   const {
     data,
     fetchNextPage,
@@ -11,7 +13,9 @@ const ArchivedRooms: React.FC = () => {
     isFetchingNextPage,
     isLoading,
     isError,
-  } = roomHooks.useArchivedRooms();
+  } = roomHooks.useMyRoom();
+
+  const { user } = authHooks.useUser();
 
   const rooms: RoomListItem[] =
     data?.pages.flatMap((page) => page.data.rooms) || [];
@@ -20,7 +24,7 @@ const ArchivedRooms: React.FC = () => {
   if (isLoading) {
     return (
       <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
-        <p className="text-sm text-gray-600">Loading archived rooms...</p>
+        <p className="text-sm text-gray-600">Loading rooms...</p>
       </div>
     );
   }
@@ -28,7 +32,7 @@ const ArchivedRooms: React.FC = () => {
   if (isError) {
     return (
       <div className="rounded-xl border border-red-300 bg-red-50 p-6 shadow">
-        <p className="text-sm text-red-600">Failed to load archived rooms</p>
+        <p className="text-sm text-red-600">Failed to load rooms</p>
       </div>
     );
   }
@@ -38,21 +42,20 @@ const ArchivedRooms: React.FC = () => {
       {/* header */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-900">
-          Archived Rooms {totalDocs ? `(${totalDocs})` : ""}
+          My Rooms {totalDocs ? `(${totalDocs})` : ""}
         </h2>
       </div>
 
       {/* no rooms message */}
-      {rooms.length === 0 && (
+      {rooms.length === 0 ? (
         <div className="rounded-xl border border-gray-300 bg-white p-6 shadow">
           <p className="text-center text-sm font-medium text-gray-600">
-            No archived rooms found
+            {user?.userType === USER_TYPES.TEACHER
+              ? "Create or join a room to get started."
+              : "Join a room to get started."}
           </p>
         </div>
-      )}
-
-      {/* rooms */}
-      {rooms.length > 0 && (
+      ) : (
         <>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {rooms.map((r) => (
@@ -86,17 +89,8 @@ const ArchivedRooms: React.FC = () => {
           )}
         </>
       )}
-
-      {/* info message */}
-      <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 shadow-sm">
-        <p className="text-sm font-medium text-blue-800">
-          <strong>Note:</strong> Archived rooms are read-only. No one can join
-          or post in these rooms until they are unarchived by the creator or
-          admin.
-        </p>
-      </div>
     </div>
   );
 };
 
-export default ArchivedRooms;
+export default MyRoomsList;
